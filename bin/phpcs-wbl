@@ -18,7 +18,17 @@ ARGS_MOD=$(echo "$ARGS" | sed -E "s/${regexB}//")
 
 BIN_DIR=$(dirname "$0")
 
-"$BIN_DIR"/phpcs $(echo "$ARGS_MOD")
-"$BIN_DIR"/phpcs-subtract-baseline "$report_file" "$baseline_file"
+if [[ "$ARGS" =~ '--dump-baseline' ]]
+then
+  # Only dump baseline
+  ARGS_MOD=$(echo "$ARGS_MOD" | sed -E "s/--report-file[^ ]+//") # remove original --report-file
+  ARGS_MOD=$(echo "$ARGS_MOD" | sed -E "s/--dump-baseline//") # remove --dump-baseline so phpcs doesn't cry
+  ARGS_MOD+=" --report-file=${baseline_file}" # add replacement --report-file=baseline.xml
+  "$BIN_DIR"/phpcs $(echo "$ARGS_MOD")
+else
+  # Run phpcs to generate report + subtract baseline
+  "$BIN_DIR"/phpcs $(echo "$ARGS_MOD")
+  "$BIN_DIR"/phpcs-subtract-baseline "$report_file" "$baseline_file"
+fi
 
 exit $?
