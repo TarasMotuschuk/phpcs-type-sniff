@@ -44,7 +44,8 @@
         "sort-packages": true
     },
     "bin": [
-        "bin/phpcs-subtract-baseline"
+        "bin/phpcs-subtract-baseline",
+        "bin/phpcs-wbl"
     ],
     "scripts": {
         "test": "vendor/bin/phpunit",

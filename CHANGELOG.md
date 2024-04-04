@@ -4,6 +4,11 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 81.4.0 - 2024-04-04
+### Added
+- Binary `phpcs-wbl` which wraps `phpcs` binary with additional argument `--baseline=phpcs-baseline.xml` and a
+call to `phpcs-subtract-baseline`
+
 ## 81.3.2 - 2023-12-11
 ### Fixed
 - Sniff options parsing

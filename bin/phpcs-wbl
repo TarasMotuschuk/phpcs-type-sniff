@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Help needed. @see https://tenor.com/bTN55.gif
+ARGS="$*"
+
+regexF='--report-file=([^ ]+)'
+[[ "$ARGS" =~ $regexF ]]
+report_file=${BASH_REMATCH[1]}
+
+regexB='--baseline=([^ ]+)'
+[[ "$ARGS" =~ $regexB ]]
+baseline_file=${BASH_REMATCH[1]}
+
+[ -z "${report_file}" ] && echo 'Missing required --report-file' && exit 1;
+[ -z "${baseline_file}" ] && echo 'Missing required --baseline' && exit 1;
+
+ARGS_MOD=$(echo "$ARGS" | sed -E "s/${regexB}//")
+
+BIN_DIR=$(dirname "$0")
+
+"$BIN_DIR"/phpcs $(echo "$ARGS_MOD")
+"$BIN_DIR"/phpcs-subtract-baseline "$report_file" "$baseline_file"
+
+exit $?
