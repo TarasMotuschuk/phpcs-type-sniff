@@ -4,6 +4,12 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 81.5.1 - 2024-04-04
+### Fixed
+- Flag `--dump-baseline` to `phpcs-wbl` binary. Can be used to extended full `phpcs-wbl` call with all flag
+  to just update baseline file instead. E.g. in `composer.json`: `@phpcs --dump-baseline`
+
+
 ## 81.5.0 - 2024-04-04
 ### Added
 - Flag `--dump-baseline` to `phpcs-wbl` binary. Can be used to extended full `phpcs-wbl` call with all flag

@@ -16,7 +16,7 @@ baseline_file=${BASH_REMATCH[1]}
 
 ARGS_MOD=$(echo "$ARGS" | sed -E "s/${regexB}//")
 
-BIN_DIR=$(dirname "$0")
+BIN_DIR=$COMPOSER_RUNTIME_BIN_DIR
 
 if [[ "$ARGS" =~ '--dump-baseline' ]]
 then
