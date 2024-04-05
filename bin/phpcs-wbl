@@ -25,6 +25,7 @@ then
   ARGS_MOD=$(echo "$ARGS_MOD" | sed -E "s/--dump-baseline//") # remove --dump-baseline so phpcs doesn't cry
   ARGS_MOD+=" --report-file=${baseline_file}" # add replacement --report-file=baseline.xml
   "$BIN_DIR"/phpcs $(echo "$ARGS_MOD")
+  exit 0
 else
   # Run phpcs to generate report + subtract baseline
   "$BIN_DIR"/phpcs $(echo "$ARGS_MOD")

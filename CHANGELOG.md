@@ -4,11 +4,15 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 81.5.2 - 2024-04-05
+### Changed
+- Min phpcs version to 3.9
+- Exit code for `phpcs-wbl` to `0` when `--dump-baseline` is used
+
 ## 81.5.1 - 2024-04-04
 ### Fixed
 - Flag `--dump-baseline` to `phpcs-wbl` binary. Can be used to extended full `phpcs-wbl` call with all flag
   to just update baseline file instead. E.g. in `composer.json`: `@phpcs --dump-baseline`
-
 
 ## 81.5.0 - 2024-04-04
 ### Added
