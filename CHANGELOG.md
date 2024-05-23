@@ -4,9 +4,11 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## Unreleased
+## 81.6.0 - 2024-05-23
 ### Changed
 - Min `phpcs` version to 3.10
+### Added
+- `IteratorItemTypeSniff` - enabled by default
 
 ## 81.5.2 - 2024-04-05
 ### Changed

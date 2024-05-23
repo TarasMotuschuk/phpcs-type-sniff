@@ -331,6 +331,7 @@ String `true/false` values are automatically converted to booleans.
             <property name="FqcnMethodSniff.enabled" value="false" />
             <property name="FqcnPropSniff.enabled" value="false" />
             <property name="FqcnDescriptionSniff.enabled" value="false" />
+            <property name="IteratorItemTypeSniff.enabled" value="false" />
 
             <!-- Change violation report type for all sniffs. Default is warning. -->
             <property name="reportType" value="error" />
@@ -340,6 +341,7 @@ String `true/false` values are automatically converted to booleans.
             <property name="FqcnMethodSniff.reportType" value="error" />
             <property name="FqcnPropSniff.reportType" value="warning" />
             <property name="FqcnDescriptionSniff.reportType" value="warning" />
+            <property name="IteratorItemTypeSniff.reportType" value="warning" />
 
             <!-- Tags that should be removed from method PHPDoc -->
             <property name="FqcnMethodSniff.invalidTags" type="array">

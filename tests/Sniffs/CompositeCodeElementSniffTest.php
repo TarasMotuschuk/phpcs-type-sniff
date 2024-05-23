@@ -566,6 +566,18 @@ class CompositeCodeElementSniffTest extends TestCase
             ],
         ];
 
+        // #25
+        $dataSets[] = [
+            [
+                'addViolationId' => false,
+                'useReflection' => false,
+            ],
+            __DIR__ . '/fixtures/TestIterator0.php',
+            [
+                '009 Classes which implement IteratorAggregate must have "@template-implements IteratorAggregate<?>" doc tag with a specified item type or template type'
+            ],
+        ];
+
         return $dataSets;
     }
 
