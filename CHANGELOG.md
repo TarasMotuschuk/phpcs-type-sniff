@@ -4,6 +4,10 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 81.6.1 - 2024-05-23
+### Changed
+- Limit `IteratorAggregate` item type tag check to direct implementation only, exclude parents for now
+
 ## 81.6.0 - 2024-05-23
 ### Changed
 - Min `phpcs` version to 3.10

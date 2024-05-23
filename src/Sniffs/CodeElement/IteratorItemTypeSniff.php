@@ -50,6 +50,10 @@ class IteratorItemTypeSniff implements CodeElementSniffInterface
             return; // give up...
         }
 
+        if ($ref->getParentClass() && $ref->getParentClass()->implementsInterface(IteratorAggregate::class)) {
+            return; // we only check direct implementations for now
+        }
+
         if (!in_array(IteratorAggregate::class, $ref->getInterfaceNames())) {
             return;
         }
