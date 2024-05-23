@@ -27,6 +27,7 @@ use Gskema\TypeSniff\Core\Type\DocBlock\ResourceType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ThisType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TrueType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TypeConverterTest extends TestCase
@@ -34,7 +35,7 @@ class TypeConverterTest extends TestCase
     /**
      * @return TypeInterface[][]
      */
-    public function dataToExampleDocType(): array
+    public static function dataToExampleDocType(): array
     {
         return [
             [new ArrayType(), new TypedArrayType(new FqcnType('SomeClass'), 1)],
@@ -69,12 +70,7 @@ class TypeConverterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataToExampleDocType
-     *
-     * @param TypeInterface      $givenFnType
-     * @param TypeInterface|null $expectedExampleDocType
-     */
+    #[DataProvider('dataToExampleDocType')]
     public function testToExampleDocType(
         TypeInterface $givenFnType,
         ?TypeInterface $expectedExampleDocType,
@@ -87,7 +83,7 @@ class TypeConverterTest extends TestCase
     /**
      * @return TypeInterface[][]
      */
-    public function dataToExampleFnType(): array
+    public static function dataToExampleFnType(): array
     {
         return [
             0 => [
@@ -196,13 +192,7 @@ class TypeConverterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataToExampleFnType
-     *
-     * @param TypeInterface $givenDocType
-     * @param TypeInterface|null $expectedFnType
-     * @param bool $givenIsProp
-     */
+    #[DataProvider('dataToExampleFnType')]
     public function testToExampleFnType(
         TypeInterface $givenDocType,
         ?TypeInterface $expectedFnType,

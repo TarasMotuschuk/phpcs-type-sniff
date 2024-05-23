@@ -29,6 +29,7 @@ use Gskema\TypeSniff\Core\Type\DocBlock\ResourceType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ThisType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TrueType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TypeFactoryTest extends TestCase
@@ -36,7 +37,7 @@ class TypeFactoryTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataSplit(): array
+    public static function dataSplit(): array
     {
         $dataSets = [
             ['int $param1', [['int'], '$param1']],
@@ -88,11 +89,9 @@ class TypeFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider dataSplit
-     *
-     * @param string  $givenTagBody
      * @param mixed[] $expectedSplit
      */
+    #[DataProvider('dataSplit')]
     public function testSplit(
         string $givenTagBody,
         array $expectedSplit,
@@ -111,7 +110,7 @@ class TypeFactoryTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataFromRawType(): array
+    public static function dataFromRawType(): array
     {
         $dataSets = [
             ['array'    , new ArrayType()],
@@ -284,11 +283,7 @@ class TypeFactoryTest extends TestCase
         return $dataSets;
     }
 
-    /**
-     * @dataProvider dataFromRawType
-     * @param string $givenRawType
-     * @param TypeInterface $expectedType
-     */
+    #[DataProvider('dataFromRawType')]
     public function testFromRawType(string $givenRawType, TypeInterface $expectedType): void
     {
         self::assertEquals($expectedType, TypeFactory::fromRawType($givenRawType));

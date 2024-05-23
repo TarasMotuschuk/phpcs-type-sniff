@@ -2,6 +2,7 @@
 
 namespace Gskema\TypeSniff\Core\Type;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TypeComparatorTest extends TestCase
@@ -9,7 +10,7 @@ class TypeComparatorTest extends TestCase
     /**
      * @return string[][]
      */
-    public function dataCompare(): array
+    public static function dataCompare(): array
     {
         // doc_type, fn_type, val_type, wrong_doc, missing_doc
         return [
@@ -94,15 +95,7 @@ class TypeComparatorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataCompare
-     *
-     * @param string      $givenRawDocType
-     * @param string      $givenRawFnType
-     * @param string|null $givenRawValueType
-     * @param string      $expectedWrongRawDocTypes
-     * @param string      $expectedMissingRawDocTypes
-     */
+    #[DataProvider('dataCompare')]
     public function testCompare(
         string $givenRawDocType,
         string $givenRawFnType,

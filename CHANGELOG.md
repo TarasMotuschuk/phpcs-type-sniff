@@ -4,6 +4,10 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## Unreleased
+### Changed
+- Min `phpcs` version to 3.10
+
 ## 81.5.2 - 2024-04-05
 ### Changed
 - Min phpcs version to 3.9

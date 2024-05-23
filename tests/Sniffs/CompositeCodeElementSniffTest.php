@@ -5,6 +5,7 @@ namespace Gskema\TypeSniff\Sniffs;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CompositeCodeElementSniffTest extends TestCase
@@ -12,7 +13,7 @@ class CompositeCodeElementSniffTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataProcess(): array
+    public static function dataProcess(): array
     {
         $dataSets = [];
 
@@ -569,12 +570,10 @@ class CompositeCodeElementSniffTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProcess
-     *
      * @param mixed[]  $givenConfig
-     * @param string   $givenPath
      * @param string[] $expectedWarnings
      */
+    #[DataProvider('dataProcess')]
     public function testProcess(
         array $givenConfig,
         string $givenPath,
