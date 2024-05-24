@@ -2,15 +2,10 @@
 
 namespace Gskema\TypeSniff\Sniffs\CodeElement;
 
-use Gskema\TypeSniff\Core\CodeElement\Element\AbstractFqcnElement;
 use Gskema\TypeSniff\Core\CodeElement\Element\ClassElement;
 use Gskema\TypeSniff\Core\CodeElement\Element\CodeElementInterface;
 use Gskema\TypeSniff\Core\SniffHelper;
-use IteratorAggregate;
 use PHP_CodeSniffer\Files\File;
-use ReflectionClass;
-use ReflectionException;
-use Throwable;
 
 class IteratorItemTypeSniff implements CodeElementSniffInterface
 {
@@ -40,21 +35,22 @@ class IteratorItemTypeSniff implements CodeElementSniffInterface
 
     /**
      * @inheritDoc
-     * @param AbstractFqcnElement $element
+     * @param ClassElement $element
      */
     public function process(File $file, CodeElementInterface $element, CodeElementInterface $parentElement): void
     {
-        try {
-            $ref = new ReflectionClass($element->getFqcn());
-        } catch (Throwable | ReflectionException) {
-            return; // give up...
+        if (empty($element->interfaceNames)) {
+            return;
         }
 
-        if ($ref->getParentClass() && $ref->getParentClass()->implementsInterface(IteratorAggregate::class)) {
-            return; // we only check direct implementations for now
-        }
-
-        if (!in_array(IteratorAggregate::class, $ref->getInterfaceNames())) {
+        // We don't want to do reflection because it may do FatalError
+        // which we don't want to do custom handlers or libs for now.
+        // For now just check direct interface names with taking imports into account - collision chance is low-ish.
+        // Also, it should be direct implementation, if it's parent implementation that various other template tags
+        // can be used instead.
+        $hasIteratorAggregate = in_array('\\IteratorAggregate', $element->interfaceNames)
+            || in_array('IteratorAggregate', $element->interfaceNames);
+        if (!$hasIteratorAggregate) {
             return;
         }
 

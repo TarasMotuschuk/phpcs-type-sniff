@@ -117,7 +117,8 @@ class CodeElementDetector
                         $docBlock = TokenHelper::getPrevDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevAttributeNames($file, $ptr);
                         $extended = TokenHelper::isClassExtended($file, $ptr);
-                        $currentElement = new ClassElement($line, $docBlock, $fqcn, [], $extended);
+                        $interfaceNames = TokenHelper::getInterfaceNames($file, $ptr);
+                        $currentElement = new ClassElement($line, $docBlock, $fqcn, [], $extended, interfaceNames: $interfaceNames);
                         $currentElement->setAttributeNames($attrNames);
                         $fileElement->addClass($currentElement);
                         $parentElement = $currentElement;

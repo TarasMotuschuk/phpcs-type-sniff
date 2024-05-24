@@ -4,6 +4,10 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 81.6.3 - 2024-05-24
+### Fixed
+- Parse implemented interfaces using token instead of reflection, to avoid FatalError. Used in IteratorItemTypeSniff
+
 ## 81.6.2 - 2024-05-24
 ### Fixed
 - Catch `Throwable` when doing reflection, for fatal errors

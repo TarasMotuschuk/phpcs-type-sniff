@@ -26,6 +26,8 @@ class ClassElement extends AbstractFqcnElement
         protected array $constants = [],
         array $properties = [],
         array $methods = [],
+        /** @var string[] */
+        public array $interfaceNames = [],
     ) {
         parent::__construct($line, $docBlock, $fqcn, $attributeNames);
         array_walk($properties, [$this, 'addProperty']);

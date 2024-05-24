@@ -600,6 +600,10 @@ class CodeElementDetectorTest extends TestCase
                                 new ClassMethodMetadata([], null, [], false),
                             ),
                         ],
+                        [
+                            'TestRef0',
+                            '\Gskema\TypeSniff\Core\CodeElement\fixtures\TestInterface0',
+                        ]
                     ),
                 ],
                 [],
