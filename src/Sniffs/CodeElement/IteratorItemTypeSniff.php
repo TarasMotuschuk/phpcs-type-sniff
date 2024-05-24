@@ -2,7 +2,6 @@
 
 namespace Gskema\TypeSniff\Sniffs\CodeElement;
 
-use Error;
 use Gskema\TypeSniff\Core\CodeElement\Element\AbstractFqcnElement;
 use Gskema\TypeSniff\Core\CodeElement\Element\ClassElement;
 use Gskema\TypeSniff\Core\CodeElement\Element\CodeElementInterface;
@@ -11,6 +10,7 @@ use IteratorAggregate;
 use PHP_CodeSniffer\Files\File;
 use ReflectionClass;
 use ReflectionException;
+use Throwable;
 
 class IteratorItemTypeSniff implements CodeElementSniffInterface
 {
@@ -46,7 +46,7 @@ class IteratorItemTypeSniff implements CodeElementSniffInterface
     {
         try {
             $ref = new ReflectionClass($element->getFqcn());
-        } catch (Error | ReflectionException) {
+        } catch (Throwable | ReflectionException) {
             return; // give up...
         }
 
