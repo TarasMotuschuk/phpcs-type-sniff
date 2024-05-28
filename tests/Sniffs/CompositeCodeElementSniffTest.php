@@ -574,7 +574,7 @@ class CompositeCodeElementSniffTest extends TestCase
             ],
             __DIR__ . '/fixtures/TestIterator0.php',
             [
-                '009 Classes which implement IteratorAggregate must have "@template-implements IteratorAggregate<?>" doc tag with a specified item type or template type'
+                '009 Classes which implement IteratorAggregate must have "@implements IteratorAggregate<?>" or "@template-implements ..." doc tag with a specified item type or template type'
             ],
         ];
 

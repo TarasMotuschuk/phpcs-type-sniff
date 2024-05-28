@@ -56,13 +56,13 @@ class IteratorItemTypeSniff implements CodeElementSniffInterface
 
         if ($element->getDocBlock()->getTagsByName('template-implements')) {
             return;
-        } elseif ($element->getDocBlock()->getTagsByName('template-extends')) {
+        } elseif ($element->getDocBlock()->getTagsByName('implements')) {
             return;
         } else {
             $originId = $this->addViolationId ? $element->getFqcn() : null;
             SniffHelper::addViolation(
                 $file,
-                'Classes which implement IteratorAggregate must have "@template-implements IteratorAggregate<?>"'
+                'Classes which implement IteratorAggregate must have "@implements IteratorAggregate<?>" or "@template-implements ..."'
                 . ' doc tag with a specified item type or template type',
                 $element->getLine(),
                 static::CODE,

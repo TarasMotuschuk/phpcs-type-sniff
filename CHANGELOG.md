@@ -4,6 +4,10 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 81.6.4 - 2024-05-24
+### Changed
+- Require `@template-implements` or `@implements` for `IteratorItemTypeSniff`, remove `@template-extends`
+
 ## 81.6.3 - 2024-05-24
 ### Fixed
 - Parse implemented interfaces using token instead of reflection, to avoid FatalError. Used in IteratorItemTypeSniff
