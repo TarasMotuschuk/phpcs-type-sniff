@@ -117,10 +117,7 @@ class TypeConverter
         $map = [
             UndefinedType::class => null,
             DoubleType::class => FloatType::class,
-            FalseType::class => BoolType::class, // false stand-alone only available in php8.1
-            NullType::class => null, // null stand-alone only available in php8.1
             ThisType::class => StaticType::class,
-            TrueType::class => BoolType::class,
             TypedArrayType::class => ArrayType::class,
             ResourceType::class => null,
             ClassStringType::class => StringType::class,
