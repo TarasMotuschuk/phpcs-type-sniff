@@ -29,7 +29,7 @@ use PHP_CodeSniffer\Files\File;
  */
 class FqcnMethodSniff implements CodeElementSniffInterface
 {
-    protected const CODE = 'FqcnMethodSniff';
+    protected const string CODE = 'FqcnMethodSniff';
 
     /** @var string[] */
     protected array $invalidTags = [];

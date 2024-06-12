@@ -18,7 +18,7 @@ use Gskema\TypeSniff\Core\CodeElement\Element\InterfaceConstElement;
 
 class FqcnConstSniff implements CodeElementSniffInterface
 {
-    protected const CODE = 'FqcnConstSniff';
+    protected const string CODE = 'FqcnConstSniff';
 
     protected string $reportType = 'warning';
 

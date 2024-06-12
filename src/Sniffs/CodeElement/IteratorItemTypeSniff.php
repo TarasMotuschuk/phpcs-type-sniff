@@ -9,7 +9,7 @@ use PHP_CodeSniffer\Files\File;
 
 class IteratorItemTypeSniff implements CodeElementSniffInterface
 {
-    protected const CODE = 'IteratorItemTypeSniff';
+    protected const string CODE = 'IteratorItemTypeSniff';
 
     protected string $reportType = 'warning';
     protected bool $addViolationId = true;

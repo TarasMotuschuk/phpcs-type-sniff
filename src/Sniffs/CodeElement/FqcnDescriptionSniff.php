@@ -13,7 +13,7 @@ use PHP_CodeSniffer\Files\File;
 
 class FqcnDescriptionSniff implements CodeElementSniffInterface
 {
-    protected const CODE = 'FqcnDescriptionSniff';
+    protected const string CODE = 'FqcnDescriptionSniff';
 
     /** @var string[] */
     protected array $invalidPatterns = [

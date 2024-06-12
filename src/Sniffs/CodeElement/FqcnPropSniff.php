@@ -19,7 +19,7 @@ use Throwable;
 
 class FqcnPropSniff implements CodeElementSniffInterface
 {
-    protected const CODE = 'FqcnPropSniff';
+    protected const string CODE = 'FqcnPropSniff';
 
     protected string $reportType = 'warning';
     protected bool $addViolationId = true;
