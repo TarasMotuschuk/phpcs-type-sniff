@@ -15,6 +15,7 @@ class ConstTypeSubject extends AbstractTypeSubject
      */
     public function __construct(
         ?TypeInterface $docType,
+        TypeInterface $fnType,
         ?TypeInterface $valueType,
         ?int $docTypeLine,
         int $fnTypeLine,
@@ -25,7 +26,7 @@ class ConstTypeSubject extends AbstractTypeSubject
     ) {
         parent::__construct(
             $docType,
-            new UndefinedType(), // not in PHP 7.4 :(
+            $fnType,
             $valueType,
             $docTypeLine,
             $fnTypeLine,
@@ -45,6 +46,7 @@ class ConstTypeSubject extends AbstractTypeSubject
 
         return new static(
             $varTag?->getType(),
+            $const->getType(),
             $const->getValueType(),
             $varTag?->getLine(),
             $const->getLine(),

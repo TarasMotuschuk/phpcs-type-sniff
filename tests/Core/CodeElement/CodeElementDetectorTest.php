@@ -95,6 +95,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\\CodeElement\\fixtures\\TestClass0',
                                 [],
                                 'CONST1',
+                                new UndefinedType(),
                                 new IntType(),
                             ),
                             new ClassConstElement(
@@ -105,6 +106,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\\CodeElement\\fixtures\\TestClass0',
                                 [],
                                 'CONST2',
+                                new UndefinedType(),
                                 new IntType(),
                             ),
                         ],
@@ -232,6 +234,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\TypeSniff\\Core\\CodeElement\\fixtures\\TestClass1',
                                 [],
                                 'CONST2',
+                                new UndefinedType(),
                                 new IntType(),
                             ),
                         ],
@@ -289,6 +292,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C01',
+                                new UnionType([new IntType(), new NullType()]),
                                 new NullType(),
                             ),
                             new ClassConstElement(
@@ -297,6 +301,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C02',
+                                new FalseType(),
                                 new BoolType(),
                             ),
                             new ClassConstElement(
@@ -306,6 +311,7 @@ class CodeElementDetectorTest extends TestCase
                                 [],
                                 'C03',
                                 new BoolType(),
+                                new BoolType(),
                             ),
                             new ClassConstElement(
                                 10,
@@ -313,6 +319,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C04',
+                                new IntType(),
                                 new IntType(),
                             ),
                             new ClassConstElement(
@@ -322,6 +329,7 @@ class CodeElementDetectorTest extends TestCase
                                 [],
                                 'C05',
                                 new FloatType(),
+                                new FloatType(),
                             ),
                             new ClassConstElement(
                                 12,
@@ -329,6 +337,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C06',
+                                new UndefinedType(),
                                 new IntType(),
                             ),
                             new ClassConstElement(
@@ -338,6 +347,7 @@ class CodeElementDetectorTest extends TestCase
                                 [],
                                 'C07',
                                 new StringType(),
+                                new StringType(),
                             ),
                             new ClassConstElement(
                                 14,
@@ -345,6 +355,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C08',
+                                new UndefinedType(),
                                 new StringType(),
                             ),
                             new ClassConstElement(
@@ -353,6 +364,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C09',
+                                new UndefinedType(),
                                 new StringType(),
                             ),
                             new ClassConstElement(
@@ -362,6 +374,7 @@ class CodeElementDetectorTest extends TestCase
                                 [],
                                 'C10',
                                 new ArrayType(),
+                                new ArrayType(),
                             ),
                             new ClassConstElement(
                                 19,
@@ -369,6 +382,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C11',
+                                new UndefinedType(),
                                 new ArrayType(),
                             ),
                             new ClassConstElement(
@@ -377,6 +391,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C12',
+                                new UndefinedType(),
                                 null,
                             ),
                             new ClassConstElement(
@@ -385,6 +400,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C13',
+                                new UndefinedType(),
                                 null,
                             ),
                             new ClassConstElement(
@@ -393,6 +409,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestClass2',
                                 [],
                                 'C14',
+                                new UndefinedType(),
                                 new IntType(),
                             ),
                         ],
@@ -446,7 +463,7 @@ class CodeElementDetectorTest extends TestCase
                         'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestInterface0',
                         [],
                         [
-                            new InterfaceConstElement(7, new UndefinedDocBlock(), 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestInterface0', [], 'C1', new IntType()),
+                            new InterfaceConstElement(7, new UndefinedDocBlock(), 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestInterface0', [], 'C1', new UndefinedType(), new IntType()),
                         ],
                         [
                             new InterfaceMethodElement(
@@ -485,6 +502,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\\TypeSniff\\Core\CodeElement\\fixtures\\TestTrait0',
                                 [],
                                 'XXX',
+                                new UndefinedType(),
                                 new IntType(),
                             ),
                         ],
@@ -838,15 +856,15 @@ class CodeElementDetectorTest extends TestCase
                         [],
                         true,
                         [
-                            new ClassConstElement(9, new UndefinedDocBlock(), $fqcn9, [], 'C1', new ArrayType()),
-                            new ClassConstElement(10, new UndefinedDocBlock(), $fqcn9, [], 'C2', new BoolType()),
-                            new ClassConstElement(11, new UndefinedDocBlock(), $fqcn9, [], 'C3', new FloatType()),
-                            new ClassConstElement(12, new UndefinedDocBlock(), $fqcn9, [], 'C4', new IntType()),
-                            new ClassConstElement(13, new UndefinedDocBlock(), $fqcn9, [], 'C5', new StringType()),
-                            new ClassConstElement(14, new UndefinedDocBlock(), $fqcn9, [], 'C6', new NullType()),
-                            new ClassConstElement(15, new UndefinedDocBlock(), $fqcn9, [], 'C7', new ArrayType()),
-                            new ClassConstElement(16, new UndefinedDocBlock(), $fqcn9, [], 'C8', null),
-                            new ClassConstElement(17, new UndefinedDocBlock(), $fqcn9, [], 'C9', new StringType()),
+                            new ClassConstElement(9, new UndefinedDocBlock(), $fqcn9, [], 'C1', new UndefinedType(), new ArrayType()),
+                            new ClassConstElement(10, new UndefinedDocBlock(), $fqcn9, [], 'C2', new UndefinedType(), new BoolType()),
+                            new ClassConstElement(11, new UndefinedDocBlock(), $fqcn9, [], 'C3', new UndefinedType(), new FloatType()),
+                            new ClassConstElement(12, new UndefinedDocBlock(), $fqcn9, [], 'C4', new UndefinedType(), new IntType()),
+                            new ClassConstElement(13, new UndefinedDocBlock(), $fqcn9, [], 'C5', new UndefinedType(), new StringType()),
+                            new ClassConstElement(14, new UndefinedDocBlock(), $fqcn9, [], 'C6', new UndefinedType(), new NullType()),
+                            new ClassConstElement(15, new UndefinedDocBlock(), $fqcn9, [], 'C7', new UndefinedType(), new ArrayType()),
+                            new ClassConstElement(16, new UndefinedDocBlock(), $fqcn9, [], 'C8', new UndefinedType(), null),
+                            new ClassConstElement(17, new UndefinedDocBlock(), $fqcn9, [], 'C9', new UndefinedType(), new StringType()),
                         ],
                         [],
                         [
@@ -1072,6 +1090,7 @@ class CodeElementDetectorTest extends TestCase
                                 'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass6',
                                 ['ConstAttr', 'FooAttribute'],
                                 'FOO_CONST',
+                                new UndefinedType(),
                                 new IntType(),
                             ),
                         ],

@@ -8,6 +8,7 @@ use Gskema\TypeSniff\Core\DocBlock\Tag\VarTag;
 use Gskema\TypeSniff\Core\Type\Common\ArrayType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
 use Gskema\TypeSniff\Inspection\DocTypeInspector;
+use Gskema\TypeSniff\Inspection\FnTypeInspector;
 use Gskema\TypeSniff\Inspection\Subject\ConstTypeSubject;
 use PHP_CodeSniffer\Files\File;
 use Gskema\TypeSniff\Core\CodeElement\Element\AbstractFqcnConstElement;
@@ -54,10 +55,11 @@ class FqcnConstSniff implements CodeElementSniffInterface
     {
         $subject = ConstTypeSubject::fromElement($const);
 
-        DocTypeInspector::reportMandatoryTypes($subject);
-        DocTypeInspector::reportReplaceableTypes($subject);
+        FnTypeInspector::reportSuggestedTypes($subject);
 
         DocTypeInspector::reportInvalidTypes($subject);
+        DocTypeInspector::reportMandatoryTypes($subject);
+        DocTypeInspector::reportReplaceableTypes($subject);
         DocTypeInspector::reportRemovableTypes($subject);
         DocTypeInspector::reportMissingOrWrongTypes($subject);
 

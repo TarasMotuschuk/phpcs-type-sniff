@@ -13,6 +13,7 @@ use Gskema\TypeSniff\Core\Type\Declaration\NullableType;
 use Gskema\TypeSniff\Core\Type\TypeConverter;
 use Gskema\TypeSniff\Core\Type\TypeInterface;
 use Gskema\TypeSniff\Inspection\Subject\AbstractTypeSubject;
+use Gskema\TypeSniff\Inspection\Subject\ConstTypeSubject;
 use Gskema\TypeSniff\Inspection\Subject\PropTypeSubject;
 
 class FnTypeInspector
@@ -62,6 +63,7 @@ class FnTypeInspector
             return;
         }
 
+        $isConst = $subject instanceof ConstTypeSubject;
         $isProp = $subject instanceof PropTypeSubject;
         $valueType = $subject->getValueType();
         $hasDefaultValue = $valueType && !($valueType instanceof UndefinedType);
@@ -70,6 +72,9 @@ class FnTypeInspector
         $requestAnyType = false;
         if ($subject->hasDefinedDocType()) {
             $possibleFnType = TypeConverter::toExampleFnType($subject->getDocType(), $isProp);
+            if (null === $possibleFnType && $isConst) {
+                $requestAnyType = true;
+            }
         } elseif ($subject->hasAttribute('ArrayShape')) {
             $possibleFnType = new ArrayType();
         } else {

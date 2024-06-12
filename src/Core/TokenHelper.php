@@ -127,6 +127,29 @@ class TokenHelper
         return $name;
     }
 
+    /**
+     * @return mixed[]
+     */
+    public static function parseConstant(File $file, int $constPtr): array
+    {
+        $tokens = $file->getTokens();
+
+        $equalPtr = $file->findNext(T_EQUAL, $constPtr + 1);
+        $constNamePtr = $file->findPrevious(T_STRING, $equalPtr - 1);
+        $constName = $tokens[$constNamePtr]['content'];
+
+        $typePtr = $file->findPrevious(Tokens::$emptyTokens, $constNamePtr - 1, $constPtr + 1, true);
+
+        if (false !== $typePtr) {
+            $rawType = $file->getTokensAsString($constPtr + 1, $typePtr - $constPtr + 1);
+            $declType = TypeFactory::fromRawType($rawType);
+        } else {
+            $declType = new UndefinedType();
+        }
+
+        return [$constName, $declType];
+    }
+
     public static function getPropDeclarationType(File $file, int $propNamePtr): TypeInterface
     {
         $endCodes = Tokens::$scopeModifiers;

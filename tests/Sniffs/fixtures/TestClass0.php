@@ -4,15 +4,15 @@ namespace Gskema\TypeSniff\Sniffs\fixtures;
 
 class TestClass0
 {
-    public const C1 = 1;
+    public const int C1 = 1;
 
     /** @var array */
-    public const C2 = 2;
+    public const int C2 = 2;
 
-    public const C3 = [];
+    public const array C3 = [];
 
     /** @var string[] */
-    public const C4 = [];
+    public const array C4 = [];
 
     private $prop1;
 
@@ -46,13 +46,13 @@ class TestClass0
     private $prop10 = [];
 
     /** @var int[]|null[] */
-    public const C5 = [null, 1];
+    public const array C5 = [null, 1];
 
     /** @var string[]|array */
-    public const C6 = [null, 1];
+    public const array C6 = [null, 1];
 
     /** @var array[] */
-    public const C7 = [];
+    public const array C7 = [];
 
     /** @var array[][] */
     private $prop11 = [];

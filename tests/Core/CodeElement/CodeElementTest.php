@@ -29,7 +29,7 @@ class CodeElementTest extends TestCase
 {
     public function test(): void
     {
-        $classConst = new ClassConstElement(1, $this->createDocBlock(), 'FQCN1', ['aaa'], 'CONST1', new IntType());
+        $classConst = new ClassConstElement(1, $this->createDocBlock(), 'FQCN1', ['aaa'], 'CONST1', new UndefinedType(), new IntType());
         self::assertEquals('CONST1', $classConst->getConstName());
         self::assertEquals('FQCN1', $classConst->getFqcn());
         self::assertEquals($this->createDocBlock(), $classConst->getDocBlock());
@@ -100,7 +100,7 @@ class CodeElementTest extends TestCase
         self::assertEquals($this->createSignature(), $func->getSignature());
         self::assertEquals(['a'], $func->getAttributeNames());
 
-        $interfaceConst = new InterfaceConstElement(8, $this->createDocBlock(), 'FQCN5', ['a'], 'CONST3', new IntType());
+        $interfaceConst = new InterfaceConstElement(8, $this->createDocBlock(), 'FQCN5', ['a'], 'CONST3', new UndefinedType(), new IntType());
         self::assertEquals('CONST3', $interfaceConst->getConstName());
         self::assertEquals('FQCN5', $interfaceConst->getFqcn());
         self::assertEquals($this->createDocBlock(), $interfaceConst->getDocBlock());

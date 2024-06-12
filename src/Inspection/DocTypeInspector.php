@@ -12,6 +12,7 @@ use Gskema\TypeSniff\Core\Type\TypeComparator;
 use Gskema\TypeSniff\Core\Type\TypeConverter;
 use Gskema\TypeSniff\Core\Type\TypeHelper;
 use Gskema\TypeSniff\Inspection\Subject\AbstractTypeSubject;
+use Gskema\TypeSniff\Inspection\Subject\ConstTypeSubject;
 use Gskema\TypeSniff\Inspection\Subject\ParamTypeSubject;
 use Gskema\TypeSniff\Inspection\Subject\PropTypeSubject;
 use Gskema\TypeSniff\Inspection\Subject\ReturnTypeSubject;
@@ -178,8 +179,10 @@ class DocTypeInspector
             return;
         }
 
-        // e.g. ?int, int|string -> ?int, int|null (wrong: string, missing: null)
         $isProp = $subject instanceof PropTypeSubject;
+        $isConst = $subject instanceof ConstTypeSubject;
+
+        // e.g. ?int, int|string -> ?int, int|null (wrong: string, missing: null)
         [$wrongDocTypes, $missingDocTypes] = TypeComparator::compare(
             $subject->getDocType(),
             $subject->getFnType(),
@@ -187,8 +190,8 @@ class DocTypeInspector
             $isProp,
         );
 
-        if ($isProp && !$subject->hasDefinedFnType()) {
-            $wrongDocTypes = []; // not reported because props have dynamic values
+        if (($isProp || $isConst) && !$subject->hasDefinedFnType()) {
+            $wrongDocTypes = []; // not reported because props or constants have dynamic values / types
         }
 
         // wrong types are not reported for dynamic assignments, e.g. class props.

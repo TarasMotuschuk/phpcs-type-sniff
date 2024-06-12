@@ -4,6 +4,10 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 83.0.0 - 2024-06-12
+### Added
+- Checking for const declaration types
+
 ## 82.3.0 - 2024-06-12
 ### Changed
 - Required phpcs version to `3.10`

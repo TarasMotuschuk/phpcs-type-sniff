@@ -150,16 +150,17 @@ class CodeElementDetector
                         break;
                 }
             } elseif ($inClass) {
-                $decName = TokenHelper::getDeclarationName($file, $ptr);
                 switch ($tokenCode) {
                     case T_CONST:
                         $docBlock = TokenHelper::getPrevDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevAttributeNames($file, $ptr);
                         [$valueType,] = TokenHelper::getAssignmentType($file, $ptr);
-                        $currentElement = new ClassConstElement($line, $docBlock, $fqcn, $attrNames, $decName, $valueType);
+                        [$decName, $declType] = TokenHelper::parseConstant($file, $ptr);
+                        $currentElement = new ClassConstElement($line, $docBlock, $fqcn, $attrNames, $decName, $declType, $valueType);
                         $parentElement->addConstant($currentElement);
                         break;
                     case T_VARIABLE:
+                        $decName = TokenHelper::getDeclarationName($file, $ptr);
                         $docBlock = TokenHelper::getPrevPropDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevPropAttributeNames($file, $ptr);
                         $declType = TokenHelper::getPropDeclarationType($file, $ptr);
@@ -170,6 +171,7 @@ class CodeElementDetector
                         $parentElement->addProperty($currentElement);
                         break;
                     case T_FUNCTION:
+                        $decName = TokenHelper::getDeclarationName($file, $ptr);
                         $extended = static::isExtended($fqcn, $decName, $useReflection);
                         $fnSig = FunctionSignatureParser::fromTokens($file, $ptr);
                         $docBlock = TokenHelper::getPrevDocBlock($file, $ptr, $skip);
@@ -187,16 +189,17 @@ class CodeElementDetector
                         break;
                 }
             } elseif ($inTrait) {
-                $decName = TokenHelper::getDeclarationName($file, $ptr);
                 switch ($tokenCode) {
                     case T_CONST:
                         $docBlock = TokenHelper::getPrevDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevAttributeNames($file, $ptr);
                         [$valueType,] = TokenHelper::getAssignmentType($file, $ptr);
-                        $currentElement = new TraitConstElement($line, $docBlock, $fqcn, $attrNames, $decName, $valueType);
+                        [$decName, $declType] = TokenHelper::parseConstant($file, $ptr);
+                        $currentElement = new TraitConstElement($line, $docBlock, $fqcn, $attrNames, $decName, $declType, $valueType);
                         $parentElement->addConstant($currentElement);
                         break;
                     case T_VARIABLE:
+                        $decName = TokenHelper::getDeclarationName($file, $ptr);
                         $docBlock = TokenHelper::getPrevPropDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevPropAttributeNames($file, $ptr);
                         $declType = TokenHelper::getPropDeclarationType($file, $ptr);
@@ -207,6 +210,7 @@ class CodeElementDetector
                         $parentElement->addProperty($currentElement);
                         break;
                     case T_FUNCTION:
+                        $decName = TokenHelper::getDeclarationName($file, $ptr);
                         $extended = static::isExtended($fqcn, $decName, $useReflection);
                         $fnSig = FunctionSignatureParser::fromTokens($file, $ptr);
                         $docBlock = TokenHelper::getPrevDocBlock($file, $ptr, $skip);
@@ -224,16 +228,17 @@ class CodeElementDetector
                         break;
                 }
             } elseif ($inInterface) {
-                $decName = TokenHelper::getDeclarationName($file, $ptr);
                 switch ($tokenCode) {
                     case T_CONST:
                         $docBlock = TokenHelper::getPrevDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevAttributeNames($file, $ptr);
                         [$valueType,] = TokenHelper::getAssignmentType($file, $ptr);
-                        $currentElement = new InterfaceConstElement($line, $docBlock, $fqcn, $attrNames, $decName, $valueType);
+                        [$decName, $declType] = TokenHelper::parseConstant($file, $ptr);
+                        $currentElement = new InterfaceConstElement($line, $docBlock, $fqcn, $attrNames, $decName, $declType, $valueType);
                         $parentElement->addConstant($currentElement);
                         break;
                     case T_FUNCTION:
+                        $decName = TokenHelper::getDeclarationName($file, $ptr);
                         $extended = static::isExtended($fqcn, $decName, $useReflection);
                         $fnSig = FunctionSignatureParser::fromTokens($file, $ptr);
                         $docBlock = TokenHelper::getPrevDocBlock($file, $ptr, $skip);
@@ -245,13 +250,13 @@ class CodeElementDetector
                         break;
                 }
             } elseif ($inEnum) {
-                $decName = TokenHelper::getDeclarationName($file, $ptr);
                 switch ($tokenCode) {
                     case T_CONST:
                         $docBlock = TokenHelper::getPrevDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevAttributeNames($file, $ptr);
                         [$valueType,] = TokenHelper::getAssignmentType($file, $ptr);
-                        $currentElement = new EnumConstElement($line, $docBlock, $fqcn, $attrNames, $decName, $valueType);
+                        [$decName, $declType] = TokenHelper::parseConstant($file, $ptr);
+                        $currentElement = new EnumConstElement($line, $docBlock, $fqcn, $attrNames, $decName, $declType, $valueType);
                         $parentElement->addConstant($currentElement);
                         break;
                     case T_FUNCTION:
