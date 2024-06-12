@@ -5,6 +5,7 @@ namespace Gskema\TypeSniff\Core\Type;
 use Gskema\TypeSniff\Core\Type\Common\ArrayType;
 use Gskema\TypeSniff\Core\Type\Common\IntType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TypeHelperTest extends TestCase
@@ -12,7 +13,7 @@ class TypeHelperTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataGetFakeTypedArrayType(): array
+    public static function dataGetFakeTypedArrayType(): array
     {
         return [
             [null, null],
@@ -22,12 +23,7 @@ class TypeHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataGetFakeTypedArrayType
-     *
-     * @param TypeInterface|null $givenType
-     * @param TypeInterface|null $expectedFakeType
-     */
+    #[DataProvider('dataGetFakeTypedArrayType')]
     public function testGetFakeTypedArrayType(?TypeInterface $givenType, ?TypeInterface $expectedFakeType): void
     {
         $actualFakeType = TypeHelper::getFakeTypedArrayType($givenType);

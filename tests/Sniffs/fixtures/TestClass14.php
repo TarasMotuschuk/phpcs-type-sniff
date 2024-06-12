@@ -58,24 +58,60 @@ class TestClass14
         $param3
     ): never { exit; }
 
-    public function method7(): null { return null; }
-    public function method8(): false { return false; }
-    public function method9(): true { return true; }
-    public function method10(): true|null { return true; }
-    public function method11(): false|null { return false; }
+    /**
+     * @param class-string $prop1
+     * @return class-string
+     */
+    public function method7(string $prop1): string
+    {
+    }
+
+    /**
+     * @param class-string $prop1
+     * @return class-string
+     */
+    public function method8($prop1)
+    {
+    }
+
+    /** @var class-string */
+    public $prop4;
+
+    /** @var iterable<string, int|string> */
+    public $prop5;
+
+    /**
+     * @param array<string, string|int> $param1
+     * @param iterable<\stdClass> $param2
+     * @param Acme<string> $param3
+     * @return \Generator<class-string>
+     */
+    public function method9($param1, $param2, Acme $param3)
+    {
+    }
+
+    /** @var array<string> */
+    public const CONST3 = [];
+
+
+    public function method10(): null { return null; }
+    public function method11(): false { return false; }
+    public function method12(): true { return true; }
+    public function method13(): true|null { return true; }
+    public function method14(): false|null { return false; }
 
     /**
      * @return null
      */
-    public function method12() { return null; }
+    public function method15() { return null; }
 
     /**
      * @return false
      */
-    public function method13() { return false; }
+    public function method16() { return false; }
 
     /**
      * @return true
      */
-    public function method14() { return true; }
+    public function method17() { return true; }
 }

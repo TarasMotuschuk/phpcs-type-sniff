@@ -17,6 +17,7 @@ use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DocBlockParserTest extends TestCase
@@ -24,7 +25,7 @@ class DocBlockParserTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataDetectFromTokens(): array
+    public static function dataDetectFromTokens(): array
     {
         $dataSets = [];
 
@@ -113,15 +114,10 @@ class DocBlockParserTest extends TestCase
     }
 
     /**
-     * @dataProvider dataDetectFromTokens
-     *
-     * @param string        $givenPath
      * @param int[]         $givenPointers
-     * @param DocBlock|null $expectedDocBlock
-     * @param string|null   $expectedException
-     *
      * @throws RuntimeException
      */
+    #[DataProvider('dataDetectFromTokens')]
     public function testDetectFromTokens(
         string $givenPath,
         array $givenPointers,
@@ -143,7 +139,7 @@ class DocBlockParserTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataFromRaw(): array
+    public static function dataFromRaw(): array
     {
         $dataSets = [];
 
@@ -249,14 +245,7 @@ class DocBlockParserTest extends TestCase
         return $dataSets;
     }
 
-    /**
-     * @dataProvider dataFromRaw
-     *
-     * @param string        $givenRawDocBlock
-     * @param int           $givenStartLine
-     * @param DocBlock|null $expectedDocBlock
-     * @param string|null   $expectedException
-     */
+    #[DataProvider('dataFromRaw')]
     public function testFromRaw(
         string $givenRawDocBlock,
         int $givenStartLine,

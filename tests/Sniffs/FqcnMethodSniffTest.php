@@ -13,6 +13,7 @@ use Gskema\TypeSniff\Core\Type\Common\IntType;
 use Gskema\TypeSniff\Core\Type\Common\UndefinedType;
 use Gskema\TypeSniff\Core\Type\Common\VoidType;
 use Gskema\TypeSniff\Sniffs\CodeElement\FqcnMethodSniff;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class FqcnMethodSniffTest extends TestCase
@@ -20,7 +21,7 @@ class FqcnMethodSniffTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataHasUselessDocBlock(): array
+    public static function dataHasUselessDocBlock(): array
     {
         $dataSets = [];
 
@@ -141,12 +142,7 @@ class FqcnMethodSniffTest extends TestCase
         return $dataSets;
     }
 
-    /**
-     * @dataProvider dataHasUselessDocBlock
-     *
-     * @param AbstractFqcnMethodElement $givenMethod
-     * @param bool                      $expectedResult
-     */
+    #[DataProvider('dataHasUselessDocBlock')]
     public function testHasUselessDocBlock(
         AbstractFqcnMethodElement $givenMethod,
         bool $expectedResult,

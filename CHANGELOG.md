@@ -31,6 +31,71 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## Added
 - Support for PHP8.2: null, true, false types, DNF types, trait constants.
 
+## 81.6.4 - 2024-05-24
+### Changed
+- Require `@template-implements` or `@implements` for `IteratorItemTypeSniff`, remove `@template-extends`
+
+## 81.6.3 - 2024-05-24
+### Fixed
+- Parse implemented interfaces using token instead of reflection, to avoid FatalError. Used in IteratorItemTypeSniff
+
+## 81.6.2 - 2024-05-24
+### Fixed
+- Catch `Throwable` when doing reflection, for fatal errors
+
+## 81.6.1 - 2024-05-23
+### Changed
+- Limit `IteratorAggregate` item type tag check to direct implementation only, exclude parents for now
+
+## 81.6.0 - 2024-05-23
+### Changed
+- Min `phpcs` version to 3.10
+### Added
+- `IteratorItemTypeSniff` - enabled by default
+
+## 81.5.2 - 2024-04-05
+### Changed
+- Min phpcs version to 3.9
+- Exit code for `phpcs-wbl` to `0` when `--dump-baseline` is used
+
+## 81.5.1 - 2024-04-04
+### Fixed
+- Flag `--dump-baseline` to `phpcs-wbl` binary. Can be used to extended full `phpcs-wbl` call with all flag
+  to just update baseline file instead. E.g. in `composer.json`: `@phpcs --dump-baseline`
+
+## 81.5.0 - 2024-04-04
+### Added
+- Flag `--dump-baseline` to `phpcs-wbl` binary. Can be used to extended full `phpcs-wbl` call with all flag
+  to just update baseline file instead. E.g. in `composer.json`: `@phpcs --dump-baseline`
+
+## 81.4.0 - 2024-04-04
+### Added
+- Binary `phpcs-wbl` which wraps `phpcs` binary with additional argument `--baseline=phpcs-baseline.xml` and a
+  call to `phpcs-subtract-baseline`
+
+## 81.3.2 - 2023-12-11
+### Fixed
+- Sniff options parsing
+
+## 81.3.1 - 2023-12-11
+### Fixed
+- Fixed parsing of `new` initializers in promoted constructor properties
+
+## 81.3.0 - 2023-06-26
+### Added
+- Support for `class-string` doc type
+- Support for specific key-value notation for iterables, e.g. `Generator<int, string>`
+
+## 81.2.0 - 2023-04-07
+### Changed
+- Remove upper bound PHP requirement so package can be installed on higher PHP versions even if locked.
+
+## 81.1.0 - 2023-03-24
+## Added
+- Option `FqcnMethodSniff.requireInheritDoc`
+## Changed
+- `inheritDoc` is now not required by default (relevant when `useReflection:true`)
+
 ## 81.0.0 - 2023-01-17
 ## Added
 - Support for PHP8.1: enums, intersection types, never type

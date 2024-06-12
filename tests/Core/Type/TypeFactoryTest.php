@@ -23,10 +23,13 @@ use Gskema\TypeSniff\Core\Type\Common\UndefinedType;
 use Gskema\TypeSniff\Core\Type\Common\UnionType;
 use Gskema\TypeSniff\Core\Type\Common\VoidType;
 use Gskema\TypeSniff\Core\Type\Declaration\NullableType;
+use Gskema\TypeSniff\Core\Type\DocBlock\ClassStringType;
 use Gskema\TypeSniff\Core\Type\DocBlock\DoubleType;
+use Gskema\TypeSniff\Core\Type\DocBlock\KeyValueType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ResourceType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ThisType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TypeFactoryTest extends TestCase
@@ -34,7 +37,7 @@ class TypeFactoryTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataSplit(): array
+    public static function dataSplit(): array
     {
         $dataSets = [
             ['int $param1', [['int'], '$param1']],
@@ -71,18 +74,24 @@ class TypeFactoryTest extends TestCase
             [
                 '(int|array<int, string & int>) | bool & string|int|array(int, int) | Desc Desc2',
                 [['(int|array<int, string & int>)', 'bool & string', 'int', 'array(int, int)', 'Desc'], 'Desc2'],
-            ]
+            ],
+            [
+                'class-string',
+                [['class-string'], '']
+            ],
+            [
+                'class-string|int',
+                [['class-string', 'int'], '']
+            ],
         ];
 
         return $dataSets;
     }
 
     /**
-     * @dataProvider dataSplit
-     *
-     * @param string  $givenTagBody
      * @param mixed[] $expectedSplit
      */
+    #[DataProvider('dataSplit')]
     public function testSplit(
         string $givenTagBody,
         array $expectedSplit,
@@ -101,7 +110,7 @@ class TypeFactoryTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataFromRawType(): array
+    public static function dataFromRawType(): array
     {
         $dataSets = [
             ['array'    , new ArrayType()],
@@ -257,16 +266,24 @@ class TypeFactoryTest extends TestCase
                     new IntersectionType([new FqcnType('B'), new FqcnType('D')]),
                 ]),
             ],
+            [
+                'class-string',
+                new ClassStringType(),
+            ],
+            [
+                'Generator<class-string>',
+                new KeyValueType(new FqcnType('Generator')),
+            ],
+            [
+                'iterable<int, string|Acme>',
+                new KeyValueType(new IterableType()),
+            ]
         ];
 
         return $dataSets;
     }
 
-    /**
-     * @dataProvider dataFromRawType
-     * @param string $givenRawType
-     * @param TypeInterface $expectedType
-     */
+    #[DataProvider('dataFromRawType')]
     public function testFromRawType(string $givenRawType, TypeInterface $expectedType): void
     {
         self::assertEquals($expectedType, TypeFactory::fromRawType($givenRawType));

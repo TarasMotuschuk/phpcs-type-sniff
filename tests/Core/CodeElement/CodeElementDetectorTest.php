@@ -57,6 +57,7 @@ use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CodeElementDetectorTest extends TestCase
@@ -64,7 +65,7 @@ class CodeElementDetectorTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataDetectFromTokens(): array
+    public static function dataDetectFromTokens(): array
     {
         $dataSets = [];
 
@@ -610,6 +611,10 @@ class CodeElementDetectorTest extends TestCase
                                 new ClassMethodMetadata([], null, [], false),
                             ),
                         ],
+                        [
+                            'TestRef0',
+                            '\Gskema\TypeSniff\Core\CodeElement\fixtures\TestInterface0',
+                        ]
                     ),
                 ],
                 [],
@@ -1331,21 +1336,15 @@ class CodeElementDetectorTest extends TestCase
         return $dataSets;
     }
 
-    /**
-     * @dataProvider dataDetectFromTokens
-     *
-     * @param bool        $givenUseReflection
-     * @param string      $givenPath
-     * @param FileElement $expected
-     */
-    public function testDetectFromTokens(bool $givenUseReflection, string $givenPath, FileElement $expected): void
+    #[DataProvider('dataDetectFromTokens')]
+    public function testDetectFromTokens(bool $givenUseReflection, string $givenFile, FileElement $expected): void
     {
-        static::assertFileExists($givenPath);
+        static::assertFileExists($givenFile);
 
-        $givenFile = new LocalFile($givenPath, new Ruleset(new Config()), new Config());
-        $givenFile->parse();
+        $givenFileObj = new LocalFile($givenFile, new Ruleset(new Config()), new Config());
+        $givenFileObj->parse();
 
-        $actual = CodeElementDetector::detectFromTokens($givenFile, $givenUseReflection);
+        $actual = CodeElementDetector::detectFromTokens($givenFileObj, $givenUseReflection);
 
         self::assertEquals($expected, $actual);
     }

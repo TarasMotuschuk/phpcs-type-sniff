@@ -2,7 +2,7 @@
 
 namespace Gskema\TypeSniff\Core\CodeElement\fixtures;
 
-class TestRef2 extends TestRef1 implements TestRef0
+class TestRef2 extends TestRef1 implements TestRef0, \Gskema\TypeSniff\Core\CodeElement\fixtures\TestInterface0
 {
     public function func0(): void
     {

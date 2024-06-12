@@ -21,10 +21,13 @@ use Gskema\TypeSniff\Core\Type\Common\UndefinedType;
 use Gskema\TypeSniff\Core\Type\Common\UnionType;
 use Gskema\TypeSniff\Core\Type\Common\VoidType;
 use Gskema\TypeSniff\Core\Type\Declaration\NullableType;
+use Gskema\TypeSniff\Core\Type\DocBlock\ClassStringType;
 use Gskema\TypeSniff\Core\Type\DocBlock\DoubleType;
+use Gskema\TypeSniff\Core\Type\DocBlock\KeyValueType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ResourceType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ThisType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TypeConverterTest extends TestCase
@@ -32,7 +35,7 @@ class TypeConverterTest extends TestCase
     /**
      * @return TypeInterface[][]
      */
-    public function dataToExampleDocType(): array
+    public static function dataToExampleDocType(): array
     {
         return [
             [new ArrayType(), new TypedArrayType(new FqcnType('SomeClass'), 1)],
@@ -67,12 +70,7 @@ class TypeConverterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataToExampleDocType
-     *
-     * @param TypeInterface      $givenFnType
-     * @param TypeInterface|null $expectedExampleDocType
-     */
+    #[DataProvider('dataToExampleDocType')]
     public function testToExampleDocType(
         TypeInterface $givenFnType,
         ?TypeInterface $expectedExampleDocType,
@@ -85,7 +83,7 @@ class TypeConverterTest extends TestCase
     /**
      * @return TypeInterface[][]
      */
-    public function dataToExampleFnType(): array
+    public static function dataToExampleFnType(): array
     {
         return [
             0 => [
@@ -179,16 +177,22 @@ class TypeConverterTest extends TestCase
                 new UnionType([new FalseType(), new CallableType()]),
                 false
             ],
+            34 => [
+                new ClassStringType(),
+                new StringType(),
+            ],
+            35 => [
+                new KeyValueType(new IterableType()),
+                new IterableType(),
+            ],
+            36 => [
+                new KeyValueType(new FqcnType('Generator')),
+                new FqcnType('Generator'),
+            ],
         ];
     }
 
-    /**
-     * @dataProvider dataToExampleFnType
-     *
-     * @param TypeInterface $givenDocType
-     * @param TypeInterface|null $expectedFnType
-     * @param bool $givenIsProp
-     */
+    #[DataProvider('dataToExampleFnType')]
     public function testToExampleFnType(
         TypeInterface $givenDocType,
         ?TypeInterface $expectedFnType,

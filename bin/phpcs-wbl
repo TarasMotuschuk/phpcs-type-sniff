@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Help needed. @see https://tenor.com/bTN55.gif
+ARGS="$*"
+
+regexF='--report-file=([^ ]+)'
+[[ "$ARGS" =~ $regexF ]]
+report_file=${BASH_REMATCH[1]}
+
+regexB='--baseline=([^ ]+)'
+[[ "$ARGS" =~ $regexB ]]
+baseline_file=${BASH_REMATCH[1]}
+
+[ -z "${report_file}" ] && echo 'Missing required --report-file' && exit 1;
+[ -z "${baseline_file}" ] && echo 'Missing required --baseline' && exit 1;
+
+ARGS_MOD=$(echo "$ARGS" | sed -E "s/${regexB}//")
+
+BIN_DIR=$COMPOSER_RUNTIME_BIN_DIR
+
+if [[ "$ARGS" =~ '--dump-baseline' ]]
+then
+  # Only dump baseline
+  ARGS_MOD=$(echo "$ARGS_MOD" | sed -E "s/--report-file[^ ]+//") # remove original --report-file
+  ARGS_MOD=$(echo "$ARGS_MOD" | sed -E "s/--dump-baseline//") # remove --dump-baseline so phpcs doesn't cry
+  ARGS_MOD+=" --report-file=${baseline_file}" # add replacement --report-file=baseline.xml
+  "$BIN_DIR"/phpcs $(echo "$ARGS_MOD")
+  exit 0
+else
+  # Run phpcs to generate report + subtract baseline
+  "$BIN_DIR"/phpcs $(echo "$ARGS_MOD")
+  "$BIN_DIR"/phpcs-subtract-baseline "$report_file" "$baseline_file"
+fi
+
+exit $?

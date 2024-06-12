@@ -17,10 +17,13 @@ use Gskema\TypeSniff\Core\Type\Common\ParentType;
 use Gskema\TypeSniff\Core\Type\Common\SelfType;
 use Gskema\TypeSniff\Core\Type\Common\StaticType;
 use Gskema\TypeSniff\Core\Type\Common\TrueType;
+use Gskema\TypeSniff\Core\Type\Common\StringType;
 use Gskema\TypeSniff\Core\Type\Common\UndefinedType;
 use Gskema\TypeSniff\Core\Type\Common\UnionType;
 use Gskema\TypeSniff\Core\Type\Declaration\NullableType;
+use Gskema\TypeSniff\Core\Type\DocBlock\ClassStringType;
 use Gskema\TypeSniff\Core\Type\DocBlock\DoubleType;
+use Gskema\TypeSniff\Core\Type\DocBlock\KeyValueType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ThisType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
 
@@ -99,6 +102,10 @@ class TypeComparator
             IterableType::class,
             FqcnType::class, // e.g. Collection|Image[]
         ],
+        ClassStringType::class => [
+            StringType::class,
+        ],
+        // bool does not cover true|false - fn type is concrete and specified - copy it to PHPDoc pls
     ];
 
     /**
@@ -156,6 +163,8 @@ class TypeComparator
 
         $flatDocTypes = $docType instanceof UnionType ? $docType->getTypes() : [$docType];
         foreach ($flatDocTypes as $flatDocType) {
+            $flatDocType = $flatDocType instanceof KeyValueType ? $flatDocType->getType() : $flatDocType;
+
             $flatDocTypeClass = get_class($flatDocType);
             $coveredFnTypeClasses = static::$coveredFnTypeClassMap[$flatDocTypeClass] ?? [];
             $coveredFnTypeClasses[] = $flatDocTypeClass;

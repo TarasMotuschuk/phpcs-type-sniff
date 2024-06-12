@@ -441,6 +441,36 @@ class TokenHelper
         return $matches[1] ?? null;
     }
 
+    /**
+     * @return string[]
+     */
+    public static function getInterfaceNames(File $file, int $classPtr): array
+    {
+        $openBracePtr = $file->findNext(T_OPEN_CURLY_BRACKET, $classPtr + 1);
+        if (false === $openBracePtr) {
+            return []; // not finished editing?
+        }
+
+        $implementsPtr = $file->findNext(T_IMPLEMENTS, $classPtr + 1, $openBracePtr);
+        if (false === $implementsPtr) {
+            return []; // does not implement anything
+        }
+
+        $binIndex = 0;
+        $bins = [];
+        $tokens = $file->getTokens();
+        for ($i = $implementsPtr + 1; $i < $openBracePtr; $i++) {
+            $code = $tokens[$i]['code'];
+            if (in_array($code, [T_STRING, T_NS_SEPARATOR])) {
+                $bins[$binIndex][] = $tokens[$i]['content'];
+            } elseif (T_COMMA === $code) {
+                $binIndex++;
+            }
+        }
+
+        return array_map(join(...), $bins);
+    }
+
     public static function isClassExtended(File $file, int $classPtr): bool
     {
         $classNamePtr = $file->findNext(Tokens::$emptyTokens, $classPtr + 1, null, true);

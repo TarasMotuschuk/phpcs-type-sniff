@@ -5,6 +5,7 @@ namespace Gskema\TypeSniff\Sniffs;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CompositeCodeElementSniffTest extends TestCase
@@ -12,7 +13,7 @@ class CompositeCodeElementSniffTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataProcess(): array
+    public static function dataProcess(): array
     {
         $dataSets = [];
 
@@ -520,8 +521,15 @@ class CompositeCodeElementSniffTest extends TestCase
                 '056 Add type declaration for parameter $param1, e.g.: "Countable&IteratorAggregate".',
                 '068 Use null return value type declaration or change type to union, e.g. SomeClass|null',
                 '070 Add type declaration for return value, e.g.: "?SomeClass".',
+                '073 Add type declaration for parameter $prop1, e.g.: "string".',
+                '073 Add type declaration for return value, e.g.: "string".',
                 '075 Add type declaration for return value, e.g.: "false".',
                 '080 Add type declaration for return value, e.g.: "true".',
+                '078 Add type declaration for property $prop4, e.g.: "string". Add default value or keep property in an uninitialized state.',
+                '081 Add type declaration for property $prop5, e.g.: "iterable". Add default value or keep property in an uninitialized state.',
+                '089 Add type declaration for parameter $param1, e.g.: "array".',
+                '089 Add type declaration for parameter $param2, e.g.: "iterable".',
+                '089 Add type declaration for return value, e.g.: "\Generator".',
             ],
         ];
 
@@ -563,16 +571,38 @@ class CompositeCodeElementSniffTest extends TestCase
             ],
         ];
 
+        // #25
+        $dataSets[] = [
+            [
+                'addViolationId' => false,
+                'useReflection' => false,
+            ],
+            __DIR__ . '/fixtures/TestClass15.php',
+            [
+            ],
+        ];
+
+        // #26
+        $dataSets[] = [
+            [
+                'addViolationId' => false,
+                'useReflection' => false,
+            ],
+            __DIR__ . '/fixtures/TestIterator0.php',
+            [
+                '009 Classes which implement IteratorAggregate must have "@implements IteratorAggregate<?>" or "@template-implements ..." doc tag with a specified item type or template type'
+            ],
+        ];
+
+
         return $dataSets;
     }
 
     /**
-     * @dataProvider dataProcess
-     *
      * @param mixed[]  $givenConfig
-     * @param string   $givenPath
      * @param string[] $expectedWarnings
      */
+    #[DataProvider('dataProcess')]
     public function testProcess(
         array $givenConfig,
         string $givenPath,

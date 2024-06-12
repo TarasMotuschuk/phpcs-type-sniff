@@ -14,11 +14,14 @@ use Gskema\TypeSniff\Core\Type\Common\NeverType;
 use Gskema\TypeSniff\Core\Type\Common\NullType;
 use Gskema\TypeSniff\Core\Type\Common\StaticType;
 use Gskema\TypeSniff\Core\Type\Common\TrueType;
+use Gskema\TypeSniff\Core\Type\Common\StringType;
 use Gskema\TypeSniff\Core\Type\Common\UndefinedType;
 use Gskema\TypeSniff\Core\Type\Common\UnionType;
 use Gskema\TypeSniff\Core\Type\Common\VoidType;
 use Gskema\TypeSniff\Core\Type\Declaration\NullableType;
+use Gskema\TypeSniff\Core\Type\DocBlock\ClassStringType;
 use Gskema\TypeSniff\Core\Type\DocBlock\DoubleType;
+use Gskema\TypeSniff\Core\Type\DocBlock\KeyValueType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ResourceType;
 use Gskema\TypeSniff\Core\Type\DocBlock\ThisType;
 use Gskema\TypeSniff\Core\Type\DocBlock\TypedArrayType;
@@ -54,7 +57,9 @@ class TypeConverter
 
     public static function toExampleFnType(TypeInterface $docType, bool $isProp): ?TypeInterface
     {
-        if ($docType instanceof UnionType) {
+        if ($docType instanceof KeyValueType) {
+            return self::toExampleFnType($docType->getType(), $isProp);
+        } elseif ($docType instanceof UnionType) {
             if ($docType->containsType(MixedType::class)) {
                 return new MixedType(); // mixed|null -> mixed, mixed type cannot be in union
             }
@@ -112,9 +117,13 @@ class TypeConverter
         $map = [
             UndefinedType::class => null,
             DoubleType::class => FloatType::class,
+            FalseType::class => BoolType::class, // false stand-alone only available in php8.1
+            NullType::class => null, // null stand-alone only available in php8.1
             ThisType::class => StaticType::class,
+            TrueType::class => BoolType::class,
             TypedArrayType::class => ArrayType::class,
             ResourceType::class => null,
+            ClassStringType::class => StringType::class,
         ];
 
         $docTypeClass = get_class($docType);

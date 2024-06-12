@@ -23,6 +23,7 @@ use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class FunctionSignatureParserTest extends TestCase
@@ -30,7 +31,7 @@ class FunctionSignatureParserTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function dataFromTokens(): array
+    public static function dataFromTokens(): array
     {
         $dataSets = [];
 
@@ -258,15 +259,9 @@ class FunctionSignatureParserTest extends TestCase
     }
 
     /**
-     * @dataProvider dataFromTokens
-     *
-     * @param string                 $givenPath
-     * @param int                    $givenFnPtr
-     * @param FunctionSignature|null $expectedFun
-     * @param string|null            $expectedException
-     *
      * @throws RuntimeException
      */
+    #[DataProvider('dataFromTokens')]
     public function testFromTokens(
         string $givenPath,
         int $givenFnPtr,

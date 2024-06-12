@@ -87,6 +87,12 @@ class Banana
     #[ArrayShape(['foo' => 'int'])]
     public $prop14 = ['foo' => 1];  // ArrayShape supported
 
+    /** @var class-string */
+    public string $prop15;
+
+    /** @var iterable<int, Acme> */
+    public iterable $prop16;
+
     public function __construct(
         $param1,                    // missing param type decl. in method PHPDoc
         public $param2,             // missing param type decl. (in method PHPDoc or inline PHPDoc)
@@ -186,6 +192,11 @@ class Banana
     ): array {
         return ['foo' => 1];
     }
+    
+    /**
+     * @return Generator<int, string>   // supported
+     */
+    public function func6(): Generator;
 }
 ```
 
@@ -320,6 +331,7 @@ String `true/false` values are automatically converted to booleans.
             <property name="FqcnMethodSniff.enabled" value="false" />
             <property name="FqcnPropSniff.enabled" value="false" />
             <property name="FqcnDescriptionSniff.enabled" value="false" />
+            <property name="IteratorItemTypeSniff.enabled" value="false" />
 
             <!-- Change violation report type for all sniffs. Default is warning. -->
             <property name="reportType" value="error" />
@@ -329,6 +341,7 @@ String `true/false` values are automatically converted to booleans.
             <property name="FqcnMethodSniff.reportType" value="error" />
             <property name="FqcnPropSniff.reportType" value="warning" />
             <property name="FqcnDescriptionSniff.reportType" value="warning" />
+            <property name="IteratorItemTypeSniff.reportType" value="warning" />
 
             <!-- Tags that should be removed from method PHPDoc -->
             <property name="FqcnMethodSniff.invalidTags" type="array">
