@@ -4,6 +4,17 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 82.3.0 - 2024-06-12
+### Changed
+- Required phpcs version to `3.10`
+### Added
+- Synced features from 81.x branch
+- `FqcnMethodSniff.requireInheritDoc`
+- Support for `class-string` doc type
+- Support for specific key-value notation
+- Binary `phpcs-wbl`
+- `IteratorItemTypeSniff`
+
 ## 82.2.1 - 2023-12-11
 ### Fixed
 - Fixed parsing of `new` initializers in promoted constructor properties
