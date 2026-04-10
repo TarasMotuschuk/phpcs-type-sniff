@@ -19,7 +19,7 @@ use Gskema\TypeSniff\Sniffs\CodeElement\FqcnPropSniff;
  */
 class CompositeCodeElementSniff extends AbstractConfigurableSniff
 {
-    protected bool $useReflection = false;
+    public bool $useReflection = false;
 
     /** @var CodeElementSniffInterface[][] */
     protected array $sniffs = [];

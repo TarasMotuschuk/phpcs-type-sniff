@@ -4,6 +4,24 @@ All notable changes to `phpcs-type-sniff` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 84.0.0 - 2026-04-10
+### Added
+- Support for PHP 8.4 property hooks
+- Support for PHP 8.4 asymmetric visibility
+- Support for PHP 8.4 `final` and `abstract` properties
+
+### Changed
+- Require PHP `>=8.4`
+- Require `squizlabs/php_codesniffer` `^3.13.3 || ^4.0`
+- Provide a PHPCS-compatible sniff path to avoid PHPCS 4 naming-convention deprecation notices
+- Verify compatibility with PHP_CodeSniffer `3.13.5` and `4.0.1`
+
+### Fixed
+- Property detection for PHP 8.4 hook bodies to avoid treating inner variables as properties
+- Assignment type detection for `new ...->...` expressions ending with `)`
+- Namespace and fully-qualified type parsing for PHP_CodeSniffer 4 token streams
+- Sniff property configuration compatibility with newer PHP_CodeSniffer property injection
+
 ## 83.0.0 - 2024-06-12
 ### Added
 - Checking for const declaration types

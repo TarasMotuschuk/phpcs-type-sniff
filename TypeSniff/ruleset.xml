@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ruleset name="TypeSniff" namespace="Gskema\TypeSniff\Standards\TypeSniff">
+    <description>PHPCS type-related sniffs.</description>
+    <autoload>../../../autoload.php</autoload>
+</ruleset>

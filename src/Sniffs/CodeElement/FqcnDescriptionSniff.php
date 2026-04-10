@@ -25,9 +25,9 @@ class FqcnDescriptionSniff implements CodeElementSniffInterface
         '@package',
     ];
 
-    protected string $reportType = 'warning';
+    public string $reportType = 'warning';
 
-    protected bool $addViolationId = true;
+    public bool $addViolationId = true;
 
     /**
      * @inheritDoc

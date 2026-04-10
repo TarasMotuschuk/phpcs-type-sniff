@@ -14,7 +14,7 @@
     <rule ref="PSR12">
         <exclude name="Generic.Files.LineLength"/>
     </rule>
-    <rule ref="./src/Sniffs/CompositeCodeElementSniff.php">
+    <rule ref="./TypeSniff/Sniffs/CodeElement/CompositeCodeElementSniff.php">
         <properties>
             <property name="useReflection" value="true"/>
         </properties>

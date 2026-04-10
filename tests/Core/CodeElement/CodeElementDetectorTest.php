@@ -878,13 +878,13 @@ class CodeElementDetectorTest extends TestCase
                                     [
                                         new FunctionParam(22, 'arg1', new ArrayType(), new ArrayType(), []),
                                         new FunctionParam(23, 'arg2', new BoolType(), new FalseType(), []),
-                                        new FunctionParam(24, 'arg3', new CallableType(), new NullType(), []),
+                                        new FunctionParam(24, 'arg3', new NullableType(new CallableType()), new NullType(), []),
                                         new FunctionParam(25, 'arg4', new FloatType(), new FloatType(), []),
-                                        new FunctionParam(26, 'arg5', new FqcnType('stdClass'), new NullType(), []),
+                                        new FunctionParam(26, 'arg5', new NullableType(new FqcnType('stdClass')), new NullType(), []),
                                         new FunctionParam(27, 'arg6', new IntType(), new IntType(), []),
                                         new FunctionParam(28, 'arg7', new IterableType(), new ArrayType(), []),
-                                        new FunctionParam(29, 'arg8', new ParentType(), new NullType(), []),
-                                        new FunctionParam(30, 'arg9', new SelfType(), new NullType(), []),
+                                        new FunctionParam(29, 'arg8', new NullableType(new ParentType()), new NullType(), []),
+                                        new FunctionParam(30, 'arg9', new NullableType(new SelfType()), new NullType(), []),
                                         new FunctionParam(31, 'arg10', new StringType(), new StringType(), []),
                                         new FunctionParam(32, 'arg11', new UndefinedType(), new NullType(), []),
                                         new FunctionParam(33, 'arg12', new NullableType(new StringType()), new NullType(), []),
@@ -1349,6 +1349,314 @@ class CodeElementDetectorTest extends TestCase
                         ],
                     ),
                 ],
+            ),
+        ];
+
+        // #16
+        $dataSets[] = [
+            'givenUseReflection' => true,
+            'givenFile' => __DIR__ . '/fixtures/TestClass8.php',
+            'expected' => new FileElement(
+                1,
+                new UndefinedDocBlock(),
+                __DIR__ . '/fixtures/TestClass8.php',
+                [],
+                [],
+                [
+                    new ClassElement(
+                        5,
+                        new UndefinedDocBlock(),
+                        'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass8',
+                        [],
+                        false,
+                        [],
+                        [
+                            new ClassPropElement(
+                                7,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass8',
+                                [],
+                                'prop1',
+                                new StringType(),
+                                new UndefinedType(),
+                                false,
+                                new ClassPropMetadata(false)
+                            ),
+                            new ClassPropElement(
+                                9,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass8',
+                                [],
+                                'prop2',
+                                new ArrayType(),
+                                new ArrayType(),
+                                false,
+                                new ClassPropMetadata(true)
+                            ),
+                            new ClassPropElement(
+                                11,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass8',
+                                [],
+                                'prop3',
+                                new UndefinedType(),
+                                new UndefinedType(),
+                                false,
+                                new ClassPropMetadata(false)
+                            ),
+                        ],
+                    ),
+                ],
+                [],
+                [],
+            ),
+        ];
+
+        // #17
+        $dataSets[] = [
+            'givenUseReflection' => true,
+            'givenFile' => __DIR__ . '/fixtures/TestClass9.php',
+            'expected' => new FileElement(
+                1,
+                new UndefinedDocBlock(),
+                __DIR__ . '/fixtures/TestClass9.php',
+                [],
+                [],
+                [
+                    new ClassElement(
+                        5,
+                        new UndefinedDocBlock(),
+                        'Gskema\TypeSniff\Core\CodeElement\fixtures\Factory9',
+                        [],
+                        false,
+                        [],
+                        [],
+                        [
+                            new ClassMethodElement(
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\Factory9',
+                                [],
+                                new FunctionSignature(7, 'create', [], new ObjectType(), 7),
+                                new ClassMethodMetadata([], null, []),
+                            ),
+                        ],
+                    ),
+                    new ClassElement(
+                        13,
+                        new UndefinedDocBlock(),
+                        'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass9',
+                        [],
+                        false,
+                        [],
+                        [
+                            new ClassPropElement(
+                                15,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass9',
+                                [],
+                                'prop1',
+                                new ObjectType(),
+                                null,
+                                false,
+                                new ClassPropMetadata(true)
+                            ),
+                        ],
+                    ),
+                ],
+                [],
+                [],
+            ),
+        ];
+
+        // #18
+        $dataSets[] = [
+            'givenUseReflection' => true,
+            'givenFile' => __DIR__ . '/fixtures/TestClass10.php',
+            'expected' => new FileElement(
+                1,
+                new UndefinedDocBlock(),
+                __DIR__ . '/fixtures/TestClass10.php',
+                [],
+                [],
+                [
+                    new ClassElement(
+                        5,
+                        new UndefinedDocBlock(),
+                        'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass10',
+                        [],
+                        false,
+                        [],
+                        [
+                            new ClassPropElement(
+                                7,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass10',
+                                [],
+                                'countryCode',
+                                new StringType(),
+                                null,
+                                false,
+                                new ClassPropMetadata(false)
+                            ),
+                        ],
+                    ),
+                ],
+                [],
+                [],
+            ),
+        ];
+
+        // #19
+        $dataSets[] = [
+            'givenUseReflection' => true,
+            'givenFile' => __DIR__ . '/fixtures/TestClass11.php',
+            'expected' => new FileElement(
+                1,
+                new UndefinedDocBlock(),
+                __DIR__ . '/fixtures/TestClass11.php',
+                [],
+                [],
+                [
+                    new ClassElement(
+                        5,
+                        new UndefinedDocBlock(),
+                        'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass11',
+                        [],
+                        false,
+                        [],
+                        [
+                            new ClassPropElement(
+                                7,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass11',
+                                [],
+                                'prop1',
+                                new StringType(),
+                                new StringType(),
+                                false,
+                                new ClassPropMetadata(true)
+                            ),
+                        ],
+                    ),
+                ],
+                [],
+                [],
+            ),
+        ];
+
+        // #20
+        $dataSets[] = [
+            'givenUseReflection' => true,
+            'givenFile' => __DIR__ . '/fixtures/TestClass12.php',
+            'expected' => new FileElement(
+                1,
+                new UndefinedDocBlock(),
+                __DIR__ . '/fixtures/TestClass12.php',
+                [],
+                [],
+                [
+                    new ClassElement(
+                        5,
+                        new UndefinedDocBlock(),
+                        'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass12',
+                        [],
+                        false,
+                        [],
+                        [
+                            new ClassPropElement(
+                                7,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass12',
+                                [],
+                                'prop1',
+                                new StringType(),
+                                null,
+                                false,
+                                new ClassPropMetadata(false)
+                            ),
+                        ],
+                    ),
+                ],
+                [],
+                [],
+            ),
+        ];
+
+        // #21
+        $dataSets[] = [
+            'givenUseReflection' => true,
+            'givenFile' => __DIR__ . '/fixtures/TestClass13.php',
+            'expected' => new FileElement(
+                1,
+                new UndefinedDocBlock(),
+                __DIR__ . '/fixtures/TestClass13.php',
+                [],
+                [],
+                [
+                    new ClassElement(
+                        5,
+                        new UndefinedDocBlock(),
+                        'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass13',
+                        [],
+                        false,
+                        [],
+                        [
+                            new ClassPropElement(
+                                7,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass13',
+                                [],
+                                'combinedCode',
+                                new StringType(),
+                                null,
+                                false,
+                                new ClassPropMetadata(false)
+                            ),
+                            new ClassPropElement(
+                                13,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass13',
+                                [],
+                                'languageCode',
+                                new StringType(),
+                                new UndefinedType(),
+                                true,
+                                new ClassPropMetadata(false)
+                            ),
+                            new ClassPropElement(
+                                14,
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass13',
+                                [],
+                                'countryCode',
+                                new StringType(),
+                                new UndefinedType(),
+                                true,
+                                new ClassPropMetadata(false)
+                            ),
+                        ],
+                        [
+                            new ClassMethodElement(
+                                new UndefinedDocBlock(),
+                                'Gskema\TypeSniff\Core\CodeElement\fixtures\TestClass13',
+                                [],
+                                new FunctionSignature(
+                                    12,
+                                    '__construct',
+                                    [
+                                        new FunctionParam(13, 'languageCode', new StringType(), new UndefinedType(), [], new UndefinedDocBlock(), true),
+                                        new FunctionParam(14, 'countryCode', new StringType(), new UndefinedType(), [], new UndefinedDocBlock(), true),
+                                    ],
+                                    new UndefinedType(),
+                                    15,
+                                ),
+                                new ClassMethodMetadata([], null, []),
+                            ),
+                        ],
+                    ),
+                ],
+                [],
+                [],
             ),
         ];
 

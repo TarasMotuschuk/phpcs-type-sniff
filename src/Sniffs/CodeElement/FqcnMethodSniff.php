@@ -32,13 +32,13 @@ class FqcnMethodSniff implements CodeElementSniffInterface
     protected const string CODE = 'FqcnMethodSniff';
 
     /** @var string[] */
-    protected array $invalidTags = [];
-    protected bool $reportMissingTags = false;
-    protected bool $reportNullableBasicGetter = true;
-    protected string $reportType = 'warning';
-    protected bool $addViolationId = true;
-    protected bool $inspectPcpAsParam = false;
-    protected bool $requireInheritDoc = false;
+    public array $invalidTags = [];
+    public bool $reportMissingTags = false;
+    public bool $reportNullableBasicGetter = true;
+    public string $reportType = 'warning';
+    public bool $addViolationId = true;
+    public bool $inspectPcpAsParam = false;
+    public bool $requireInheritDoc = false;
 
     /**
      * @inheritDoc

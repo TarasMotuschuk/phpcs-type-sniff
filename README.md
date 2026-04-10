@@ -210,7 +210,7 @@ $ composer require --dev gskema/phpcs-type-sniff
 
 ## Usage
 
-This is a standalone sniff file, you need to add it to your `phpcs.xml` file.
+This package ships a PHPCS-compatible sniff path, which you can add to your `phpcs.xml` file.
 
 ### Usage Without Reflection
 
@@ -223,7 +223,7 @@ If a method does not have this tag, it is inspected. **This is the recommended s
     <rule ref="PSR2"/>
 
     <!-- phpcs-type-sniff configuration -->   
-    <rule ref="./vendor/gskema/phpcs-type-sniff/src/Sniffs/CompositeCodeElementSniff.php"/>
+    <rule ref="./vendor/gskema/phpcs-type-sniff/TypeSniff/Sniffs/CodeElement/CompositeCodeElementSniff.php"/>
 </ruleset>
 ```
 
@@ -242,7 +242,7 @@ cause `phpcs` crashes while editing (not possible to catch `FatalError`).
 
     <!-- phpcs-type-sniff configuration -->   
     <autoload>./vendor/autoload.php</autoload>
-    <rule ref="./vendor/gskema/phpcs-type-sniff/src/Sniffs/CompositeCodeElementSniff.php">
+    <rule ref="./vendor/gskema/phpcs-type-sniff/TypeSniff/Sniffs/CodeElement/CompositeCodeElementSniff.php">
         <properties>
             <property name="useReflection" value="true"/>
         </properties>
@@ -313,8 +313,8 @@ String `true/false` values are automatically converted to booleans.
     <!-- or custom code element sniff(s) -->
     <autoload>./vendor/autoload.php</autoload>
 
-    <!-- Includes a standalone sniff to your custom coding standard -->
-    <rule ref="./vendor/gskema/phpcs-type-sniff/src/Sniffs/CompositeCodeElementSniff.php">
+    <!-- Includes a PHPCS-compatible sniff into your custom coding standard -->
+    <rule ref="./vendor/gskema/phpcs-type-sniff/TypeSniff/Sniffs/CodeElement/CompositeCodeElementSniff.php">
         <properties>
 
             <!-- Enables usage of reflection API when inspecting extended classes. -->

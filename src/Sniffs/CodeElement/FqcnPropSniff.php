@@ -21,9 +21,9 @@ class FqcnPropSniff implements CodeElementSniffInterface
 {
     protected const string CODE = 'FqcnPropSniff';
 
-    protected string $reportType = 'warning';
-    protected bool $addViolationId = true;
-    protected bool $inspectPcpAsProp = true;
+    public string $reportType = 'warning';
+    public bool $addViolationId = true;
+    public bool $inspectPcpAsProp = true;
 
     /**
      * @inheritDoc

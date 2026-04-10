@@ -613,6 +613,17 @@ class CompositeCodeElementSniffTest extends TestCase
             ],
         ];
 
+        // #27
+        $dataSets[] = [
+            [
+                'addViolationId' => false,
+                'useReflection' => false,
+            ],
+            __DIR__ . '/fixtures/TestClass16.php',
+            [
+            ],
+        ];
+
 
         return $dataSets;
     }
@@ -632,7 +643,7 @@ class CompositeCodeElementSniffTest extends TestCase
         $givenFile = new LocalFile($givenPath, new Ruleset(new Config()), new Config());
         $givenFile->parse();
 
-        $ref = './src/Sniffs/CompositeCodeElementSniff.php'; // @see phpcs.xml
+        $ref = './TypeSniff/Sniffs/CodeElement/CompositeCodeElementSniff.php'; // @see phpcs.xml
         $givenFile->ruleset->ruleset[$ref] = [
             'properties' => $givenConfig,
         ];

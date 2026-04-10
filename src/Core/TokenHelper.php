@@ -23,6 +23,28 @@ use PHP_CodeSniffer\Util\Tokens;
 class TokenHelper
 {
     /**
+     * @return int[]|string[]
+     */
+    public static function getPropertyModifierTokens(): array
+    {
+        $tokens = array_merge(
+            Tokens::$scopeModifiers,
+            [
+                T_STATIC,
+                T_VAR,
+                T_READONLY,
+                T_FINAL,
+                T_ABSTRACT,
+                T_PUBLIC_SET,
+                T_PROTECTED_SET,
+                T_PRIVATE_SET,
+            ]
+        );
+
+        return array_values(array_unique($tokens));
+    }
+
+    /**
      * @param File           $file
      * @param int            $propPtr
      * @param int[]|string[] $skip
@@ -31,7 +53,7 @@ class TokenHelper
      */
     public static function getPrevPropDocBlock(File $file, int $propPtr, array $skip): DocBlock
     {
-        $scopePtr = $file->findPrevious(Tokens::$scopeModifiers, $propPtr - 1);
+        $scopePtr = $file->findPrevious(static::getPropertyModifierTokens(), $propPtr - 1);
         if (false === $scopePtr) {
             return new UndefinedDocBlock(); // unfinished file
         }
@@ -105,7 +127,7 @@ class TokenHelper
             if (T_SEMICOLON === $tokenCode || T_OPEN_CURLY_BRACKET === $tokenCode) {
                 break;
             }
-            if (T_STRING === $tokenCode || T_NS_SEPARATOR === $tokenCode) {
+            if (in_array($tokenCode, [T_STRING, T_NS_SEPARATOR, T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED], true)) {
                 $namespace .= $tokens[$ptr]['content'];
             }
         }
@@ -152,8 +174,7 @@ class TokenHelper
 
     public static function getPropDeclarationType(File $file, int $propNamePtr): TypeInterface
     {
-        $endCodes = Tokens::$scopeModifiers;
-        $endCodes[] = T_STATIC;
+        $endCodes = static::getPropertyModifierTokens();
 
         $tokens = $file->getTokens();
 
@@ -173,6 +194,50 @@ class TokenHelper
         return TypeFactory::fromRawType($rawType);
     }
 
+    public static function isPropertyDeclarationPointer(File $file, int $varPtr): bool
+    {
+        $tokens = $file->getTokens();
+        if (($tokens[$varPtr]['code'] ?? null) !== T_VARIABLE) {
+            return false;
+        }
+
+        $prevPtr = $file->findPrevious(Tokens::$emptyTokens, $varPtr - 1, null, true);
+        $nextPtr = $file->findNext(Tokens::$emptyTokens, $varPtr + 1, null, true);
+        if (false === $prevPtr || false === $nextPtr) {
+            return false;
+        }
+
+        $prevCode = $tokens[$prevPtr]['code'];
+        $nextCode = $tokens[$nextPtr]['code'];
+
+        $allowedPrevCodes = array_merge(
+            static::getPropertyModifierTokens(),
+            [
+                T_ARRAY,
+                T_CALLABLE,
+                T_COMMA,
+                T_FALSE,
+                T_NS_SEPARATOR,
+                T_NULLABLE,
+                T_PARENT,
+                T_SELF,
+                T_STATIC,
+                T_STRING,
+                T_TRUE,
+                T_TYPE_INTERSECTION,
+                T_TYPE_UNION,
+            ]
+        );
+        $allowedNextCodes = [
+            T_COMMA,
+            T_EQUAL,
+            T_OPEN_CURLY_BRACKET,
+            T_SEMICOLON,
+        ];
+
+        return in_array($prevCode, $allowedPrevCodes, true) && in_array($nextCode, $allowedNextCodes, true);
+    }
+
     /**
      * @param File $file
      * @param int  $constVarPtr
@@ -183,6 +248,12 @@ class TokenHelper
     {
         // @TODO Move function somewhere?
         $tokens = $file->getTokens();
+
+        $nextPtr = $file->findNext(Tokens::$emptyTokens, $constVarPtr + 1, null, true);
+        $nextCode = false === $nextPtr ? null : $tokens[$nextPtr]['code'];
+        if (T_OPEN_CURLY_BRACKET === $nextCode) {
+            return [null, false];
+        }
 
         // $ptr is at const or variable (prop), it's safer and easier to search backwards
         $semiPtr = $file->findNext([T_SEMICOLON], $constVarPtr + 1);
@@ -216,8 +287,15 @@ class TokenHelper
                 $valueType = new StringType();
                 break;
             case T_CLOSE_SHORT_ARRAY:
-            case T_CLOSE_PARENTHESIS: // array()
                 $valueType = new ArrayType();
+                break;
+            case T_CLOSE_PARENTHESIS:
+                $openParenthesisPtr = static::findOpeningParenthesis($file, $valueEndPtr);
+                $arrayPtr = null === $openParenthesisPtr
+                    ? false
+                    : $file->findPrevious(Tokens::$emptyTokens, $openParenthesisPtr - 1, null, true);
+                $arrayTokenCode = false === $arrayPtr ? null : $tokens[$arrayPtr]['code'];
+                $valueType = T_ARRAY === $arrayTokenCode ? new ArrayType() : null;
                 break;
             default:
                 // We COULD return UndefinedType for T_STRING (no assigment), but this conflicts
@@ -242,7 +320,7 @@ class TokenHelper
         }
 
         // return $this->prop;
-        $codeSequence = [T_RETURN, T_THIS, T_OBJECT_OPERATOR, T_STRING, T_SEMICOLON];
+        $codeSequence = [T_RETURN, '$this', T_OBJECT_OPERATOR, T_STRING, T_SEMICOLON];
 
         $propName = null;
         for ($ptr = $openPtr + 1; $ptr < $closePtr; $ptr++) {
@@ -252,7 +330,7 @@ class TokenHelper
                 continue;
             }
             $expectedCode = array_shift($codeSequence);
-            if (T_THIS === $expectedCode) {
+            if ('$this' === $expectedCode) {
                 if (!static::isThisToken($token)) {
                     return false;
                 }
@@ -342,7 +420,7 @@ class TokenHelper
      */
     public static function isThisToken(array $token): bool
     {
-        return T_VARIABLE === $token['code'] && '$this' === $token['content'];
+        return '$this' === ($token['content'] ?? null);
     }
 
     /**
@@ -408,7 +486,7 @@ class TokenHelper
      */
     public static function getPrevPropAttributeNames(File $file, int $propPtr): array
     {
-        $scopePtr = $file->findPrevious(Tokens::$scopeModifiers, $propPtr - 1);
+        $scopePtr = $file->findPrevious(static::getPropertyModifierTokens(), $propPtr - 1);
         if (false === $scopePtr) {
             return []; // unfinished editing
         }
@@ -484,7 +562,7 @@ class TokenHelper
         $tokens = $file->getTokens();
         for ($i = $implementsPtr + 1; $i < $openBracePtr; $i++) {
             $code = $tokens[$i]['code'];
-            if (in_array($code, [T_STRING, T_NS_SEPARATOR])) {
+            if (in_array($code, [T_STRING, T_NS_SEPARATOR, T_NAME_QUALIFIED, T_NAME_FULLY_QUALIFIED], true)) {
                 $bins[$binIndex][] = $tokens[$i]['content'];
             } elseif (T_COMMA === $code) {
                 $binIndex++;
@@ -521,6 +599,27 @@ class TokenHelper
                 $openedScopeCount--;
             }
             if (0 === $openedScopeCount) {
+                return $ptr;
+            }
+        }
+
+        return null;
+    }
+
+    public static function findOpeningParenthesis(File $file, int $closeParenthesisPtr): ?int
+    {
+        $tokens = $file->getTokens();
+
+        $ptr = $closeParenthesisPtr;
+        $closedScopeCount = 1;
+        while (isset($tokens[--$ptr])) {
+            $tokenCode = $tokens[$ptr]['code'] ?? null;
+            if (T_CLOSE_PARENTHESIS === $tokenCode) {
+                $closedScopeCount++;
+            } elseif (T_OPEN_PARENTHESIS === $tokenCode) {
+                $closedScopeCount--;
+            }
+            if (0 === $closedScopeCount) {
                 return $ptr;
             }
         }

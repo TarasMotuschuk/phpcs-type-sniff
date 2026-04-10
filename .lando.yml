@@ -1,0 +1,25 @@
+name: phpcs-type-sniff
+recipe: lamp
+config:
+  webroot: .
+  php: "8.4"
+  composer_version: "2"
+  xdebug: false
+services:
+  appserver:
+    type: php:8.4
+    via: nginx
+    overrides:
+      environment:
+        COMPOSER_MEMORY_LIMIT: -1
+tooling:
+  php:
+    service: appserver
+  composer:
+    service: appserver
+  phpunit:
+    service: appserver
+    cmd: ./vendor/bin/phpunit
+  phpcs:
+    service: appserver
+    cmd: ./vendor/bin/phpcs

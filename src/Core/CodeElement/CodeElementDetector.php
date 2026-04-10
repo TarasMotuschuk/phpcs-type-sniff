@@ -160,6 +160,9 @@ class CodeElementDetector
                         $parentElement->addConstant($currentElement);
                         break;
                     case T_VARIABLE:
+                        if (!TokenHelper::isPropertyDeclarationPointer($file, $ptr)) {
+                            break;
+                        }
                         $decName = TokenHelper::getDeclarationName($file, $ptr);
                         $docBlock = TokenHelper::getPrevPropDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevPropAttributeNames($file, $ptr);
@@ -199,6 +202,9 @@ class CodeElementDetector
                         $parentElement->addConstant($currentElement);
                         break;
                     case T_VARIABLE:
+                        if (!TokenHelper::isPropertyDeclarationPointer($file, $ptr)) {
+                            break;
+                        }
                         $decName = TokenHelper::getDeclarationName($file, $ptr);
                         $docBlock = TokenHelper::getPrevPropDocBlock($file, $ptr, $skip);
                         $attrNames = TokenHelper::getPrevPropAttributeNames($file, $ptr);

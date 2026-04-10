@@ -11,8 +11,8 @@ class IteratorItemTypeSniff implements CodeElementSniffInterface
 {
     protected const string CODE = 'IteratorItemTypeSniff';
 
-    protected string $reportType = 'warning';
-    protected bool $addViolationId = true;
+    public string $reportType = 'warning';
+    public bool $addViolationId = true;
 
     /**
      * @inheritDoc

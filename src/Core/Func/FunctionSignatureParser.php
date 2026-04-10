@@ -106,6 +106,8 @@ class FunctionSignatureParser
                 case T_BITWISE_OR: // phpcs 3.7.1 bug: treat as T_TYPE_UNION
                 case T_TYPE_INTERSECTION:
                 case T_NS_SEPARATOR:
+                case T_NAME_QUALIFIED:
+                case T_NAME_FULLY_QUALIFIED:
                     if (isset($raw['default'])) {
                         $raw['default'] .= $token['content'];
                     } else {
@@ -218,6 +220,8 @@ class FunctionSignatureParser
                 case T_TRUE:
                 case T_NULL:
                 case T_NS_SEPARATOR:
+                case T_NAME_QUALIFIED:
+                case T_NAME_FULLY_QUALIFIED:
                 case T_OPEN_PARENTHESIS:
                 case T_CLOSE_PARENTHESIS:
                     $returnLine = $token['line'];
