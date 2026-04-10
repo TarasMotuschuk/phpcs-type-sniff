@@ -212,6 +212,22 @@ $ composer require --dev gskema/phpcs-type-sniff
 
 This package ships a PHPCS-compatible sniff path, which you can add to your `phpcs.xml` file.
 
+### Migrating From Old Sniff Path
+
+If you previously referenced the legacy sniff file directly, e.g.:
+
+```xml
+<rule ref="./vendor/gskema/phpcs-type-sniff/src/Sniffs/CompositeCodeElementSniff.php"/>
+```
+
+replace it with the PHPCS-compatible path:
+
+```xml
+<rule ref="./vendor/gskema/phpcs-type-sniff/TypeSniff/Sniffs/CodeElement/CompositeCodeElementSniff.php"/>
+```
+
+The old `src/Sniffs/CompositeCodeElementSniff.php` path is kept only for backward compatibility and will still trigger PHPCS naming-convention deprecation notices.
+
 ### Usage Without Reflection
 
 Inspections for methods with `@inheritdoc` tag are skipped.
