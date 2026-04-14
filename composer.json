@@ -1,5 +1,5 @@
 {
-    "name": "gskema/phpcs-type-sniff",
+    "name": "drudev/phpcs-type-sniff",
     "type": "library",
     "description": "PHPCS sniff to enforce PHP7 types and array types",
     "keywords": [
@@ -15,6 +15,11 @@
             "name": "Gytis Škėma",
             "email": "gytis.skema@gmail.com",
             "role": "Developer"
+        },
+        {
+          "name": "Taras Motuschuk",
+          "email": "mtomekt+dev@gmail.com",
+          "role": "Maintainer"
         }
     ],
     "require": {

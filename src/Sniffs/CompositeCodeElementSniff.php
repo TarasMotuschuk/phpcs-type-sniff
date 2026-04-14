@@ -16,8 +16,6 @@ use Gskema\TypeSniff\Sniffs\CodeElement\FqcnPropSniff;
 
 /**
  * @see CompositeCodeElementSniffTest
- * @deprecated Use Gskema\TypeSniff\Standards\TypeSniff\Sniffs\CodeElement\CompositeCodeElementSniff
- *             via TypeSniff/Sniffs/CodeElement/CompositeCodeElementSniff.php
  */
 class CompositeCodeElementSniff extends AbstractConfigurableSniff
 {
