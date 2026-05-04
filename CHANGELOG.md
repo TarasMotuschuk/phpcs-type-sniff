@@ -21,6 +21,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Assignment type detection for `new ...->...` expressions ending with `)`
 - Namespace and fully-qualified type parsing for PHP_CodeSniffer 4 token streams
 - Sniff property configuration compatibility with newer PHP_CodeSniffer property injection
+- PHPCS ruleset property injection for configurable sniff options such as `FqcnMethodSniff.enabled` and `inspectPromotedConstructorPropertyAs`
 
 ## 83.0.0 - 2024-06-12
 ### Added

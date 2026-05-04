@@ -10,6 +10,18 @@ use PHPUnit\Framework\TestCase;
 
 class CompositeCodeElementSniffTest extends TestCase
 {
+    public function testRulesetPropertiesAreAcceptedByPhpCodeSniffer(): void
+    {
+        $sniff = new CompositeCodeElementSniff();
+
+        $sniff->{'FqcnMethodSniff.enabled'} = 'true';
+        $sniff->{'FqcnMethodSniff.reportType'} = 'error';
+        $sniff->reportType = 'error';
+        $sniff->inspectPromotedConstructorPropertyAs = 'param';
+
+        static::assertTrue(method_exists($sniff, '__set'));
+    }
+
     /**
      * @return mixed[][]
      */

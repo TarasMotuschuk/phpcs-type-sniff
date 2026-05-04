@@ -10,6 +10,13 @@ abstract class AbstractConfigurableSniff implements Sniff
     protected bool $configured = false;
 
     /**
+     * Let PHPCS accept ruleset properties handled by configure().
+     */
+    public function __set(string $name, mixed $value): void
+    {
+    }
+
+    /**
      * @inheritDoc
      */
     public function process(File $file, $ptr): void
